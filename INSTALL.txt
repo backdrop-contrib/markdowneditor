@@ -1,0 +1,58 @@
+// $Id$
+
+MarkdownEditor Beta-1 Installation Instructions
+
+To get MarkdownEditor up and running, you must perform the following
+steps:
+
+1. Make sure the BUEditor and Markdown filter modules are installed.
+If you're using a BUEditor version older than 5.x-1.1 you will likely
+experience problems. See the bottom of this file for more information
+on this.
+
+2. Extract the compressed file containing MarkdownEditor.
+
+3. Move the markdown folder from library/markdown to BUEditor's
+library folder and move the icons into BUEditor's icons directory.
+BUEditor is typically located at sites/all/modules/bueditor/ or
+modules/bueditor/ (seen from your drupal directory.)
+
+This implies that you have to name your editor markdown in order for
+the JS files to load properly. If you want the files to load for every
+editor you should put the files directly into bueditor/library/
+(without any subdirectories). See bueditor/library/README.txt  for
+more information.
+
+
+4. Create a new editor through the BUEditor administration interface.
+It is typically located at
+http://www.example.com/admin/settings/bueditor if clean URLs are enabled.
+
+If you choose to import buttons during this step, make sure to insert
+the  name of the editor before *each* form submission, otherwise you
+might have to start over.
+
+5. Go into  the  new editor's  settings  page and  choose to  import
+buttons, select MarkdownEditorButtons.csv and submit.
+
+6. Scroll down below the button declarations and press Save.
+
+7. The plugin is now good to go. You will need to refresh the settings
+page once or twice if you want to make sure the demo editor works.
+
+
+KNOWN BUGS:
+Under certain circumstances, the editor may append empty lines at the
+bottom of the editor text area.
+If you experience problem using this editor, please file an issue in its
+project page's issue tracker at drupal.org. Please include detailed
+instructions so that we can recreate the problem and effectively analyze
+and fix it.
+http://drupal.org/project/markdowneditor
+
+
+NOTE:
+There is a patch for a problem when saving buttons available at
+http://drupal.org/node/151445. This patch was included in buEditor
+5.x-1.1.  If you make sure to not save your buttons more than once per
+import the update is not necessary, but still recommended.
