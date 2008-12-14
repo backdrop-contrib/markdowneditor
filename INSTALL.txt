@@ -1,6 +1,6 @@
 // $Id$
 
-MarkdownEditor Beta-1 Installation Instructions
+MarkdownEditor Installation Instructions
 
 To get MarkdownEditor up and running, you must perform the following
 steps:
