@@ -2,7 +2,7 @@
 
 /**
  * @file
- * A test suite for selected functionality from MarkdownEditor.
+ * MarkdownEditor JS library for BUEditor.
  *
  * @author Jakob Persson <jakob@imbridge.com>
  * @author Adam Bergmark
@@ -603,7 +603,7 @@ markdownEditor.dialog = {
    *  An HTMLElement.
    */
   getContent : function () {
-    return markdownEditor.extras.getElementByClassName("content", editor.dialog.popup);
+    return markdownEditor.extras.getElementByClassName("cnt", BUE.dialog.popup);
   },
 
   /**
@@ -632,7 +632,7 @@ markdownEditor.dialog = {
   close : function () {
     markdownEditor.dialog.clearWidth();
     markdownEditor.dialog.clear();
-    editor.dialog.close();
+    BUE.dialog.close();
   },
 
   /**
@@ -662,7 +662,7 @@ markdownEditor.dialog = {
     };
 
     // Open the dialog and set any content specified.
-    editor.dialog.open(title, HTMLContents || "");
+    BUE.dialog.open(title, HTMLContents || "");
 
     // Create a keylistener to enable  the user to close or submit the
     // dialog by pressing enter or escape.
@@ -925,7 +925,7 @@ markdownEditor.dialog = {
    *   The string title.
    */
   getTitle : function () {
-    return editor.dialog.popup.rows[0].cells[0].innerHTML;
+    return BUE.dialog.popup.rows[0].cells[0].innerHTML;
   },
 
   /**
@@ -1057,7 +1057,7 @@ markdownEditor.dialog = {
    * Clears any width settings that were set by setWidth.
    */
   clearWidth : function () {
-    var dialog = document.getElementById("editor-dialog");
+    var dialog = document.getElementById("bue-dialog");
 
     if (markdownEditor.extras.browser.ie) {
       dialog.style.width = "";
@@ -1071,7 +1071,7 @@ markdownEditor.dialog = {
    * Sets the maximum width of the dialog, useful for dialogs containing text.
    */
   setWidth : function () {
-    var dialog = document.getElementById("editor-dialog");
+    var dialog = document.getElementById("bue-dialog");
     var isIE = /*@cc_on !@*/ false;
 
     // maxWidth is width in IE.
@@ -1096,12 +1096,12 @@ markdownEditor.selection = {
    * belongs to.
    */
   selectToEndOfLine : function () {
-    var content = editor.active.getContent();
-    var end = editor.active.posSelection().end;
+    var content = BUE.active.getContent();
+    var end = BUE.active.posSelection().end;
     while (content.charAt(end) !== "\n" && end < content.length) {
       end++;
     }
-    editor.active.makeSelection(editor.active.posSelection().start, end);
+    BUE.active.makeSelection(BUE.active.posSelection().start, end);
   },
 
   /**
@@ -1114,7 +1114,7 @@ markdownEditor.selection = {
    *   Returns undefined if the line doesn't exist.
    */
   getLine : function (lineNumber) {
-    return editor.active.getSelection().split(/(\r\n?|\n)/)[lineNumber];
+    return BUE.active.getSelection().split(/(\r\n?|\n)/)[lineNumber];
   },
 
   /**
@@ -1123,14 +1123,14 @@ markdownEditor.selection = {
    */
   excludeLineBreaks : function () {
     var pos;
-    if (/^(\n+)/.test(editor.active.getSelection())) {
-      pos = editor.active.posSelection();
-      editor.active.makeSelection(Math.min(pos.start + RegExp.$1.length, pos.end), pos.end);
+    if (/^(\n+)/.test(BUE.active.getSelection())) {
+      pos = BUE.active.posSelection();
+      BUE.active.makeSelection(Math.min(pos.start + RegExp.$1.length, pos.end), pos.end);
     }
 
-    if (/(\n+)$/.test(editor.active.getSelection())) {
-      pos = editor.active.posSelection();
-      editor.active.makeSelection(pos.start, Math.max(pos.start, pos.end - RegExp.$1.length));
+    if (/(\n+)$/.test(BUE.active.getSelection())) {
+      pos = BUE.active.posSelection();
+      BUE.active.makeSelection(pos.start, Math.max(pos.start, pos.end - RegExp.$1.length));
     }
   },
 
@@ -1157,8 +1157,8 @@ markdownEditor.selection = {
    */
   insertBefore : function (string) {
     markdownEditor.selection.replace(/^/, string);
-    var pos = editor.active.posSelection();
-    editor.active.makeSelection(pos.start + string.length, pos.end);
+    var pos = BUE.active.posSelection();
+    BUE.active.makeSelection(pos.start + string.length, pos.end);
   },
 
   /**
@@ -1170,8 +1170,8 @@ markdownEditor.selection = {
    */
   insertAfter : function (string) {
     markdownEditor.selection.replace(/$/, string);
-    var pos = editor.active.posSelection();
-    editor.active.makeSelection(pos.start, pos.end - string.length);
+    var pos = BUE.active.posSelection();
+    BUE.active.makeSelection(pos.start, pos.end - string.length);
   },
 
   /**
@@ -1181,7 +1181,7 @@ markdownEditor.selection = {
    *   Whether nothing is selected.
    */
   isEmpty : function () {
-    return editor.active.getSelection() === "";
+    return BUE.active.getSelection() === "";
   },
 
   /**
@@ -1192,8 +1192,8 @@ markdownEditor.selection = {
    *   A string of the prefixing characters, or "" if there is no prefix.
    */
   getPrefix : function () {
-    var content = editor.active.getContent();
-    var pos = editor.active.posSelection();
+    var content = BUE.active.getContent();
+    var pos = BUE.active.posSelection();
 
     // If the selection starts at the first character of the document,
     // no prefix exists.
@@ -1229,10 +1229,10 @@ markdownEditor.selection = {
    *   A string of the suffixing character, or "" if there is no suffix.
    */
   getSuffix : function () {
-    var content = editor.active.getContent();
+    var content = BUE.active.getContent();
 
     // The suffix starts where the selection ends.
-    var suffixStart = editor.active.posSelection().end;
+    var suffixStart = BUE.active.posSelection().end;
 
     // Start at the  start of the suffix, and loop  until a line break
     // or the end of the document is reached.
@@ -1283,11 +1283,11 @@ markdownEditor.selection = {
 
       // Make the  current selection exclude  the space that  was just
       // inserted.
-      var pos = editor.active.posSelection();
+      var pos = BUE.active.posSelection();
       if (pos.start === pos.end) {
         pos.end++;
       }
-      editor.active.makeSelection(pos.start + 1, pos.end);
+      BUE.active.makeSelection(pos.start + 1, pos.end);
       delete pos;
     }
 
@@ -1300,11 +1300,11 @@ markdownEditor.selection = {
 
       // Adjust  the selection  to  exclude the  space  that was  just
       // inserted.
-      var pos = editor.active.posSelection();
+      var pos = BUE.active.posSelection();
       if (pos.end > pos.start) {
         pos.end--;
       }
-      editor.active.makeSelection(pos.start, pos.end);
+      BUE.active.makeSelection(pos.start, pos.end);
       delete pos;
     }
   },
@@ -1316,8 +1316,8 @@ markdownEditor.selection = {
    */
   lineBreak : function () {
     var selection = markdownEditor.selection;
-    var getPos = editor.active.posSelection.bind(editor.active);
-    var getContent = editor.active.getContent.bind(editor.active);
+    var getPos = BUE.active.posSelection.bind(BUE.active);
+    var getContent = BUE.active.getContent.bind(BUE.active);
 
 
     // Remove any prefixing spaces.
@@ -1334,7 +1334,7 @@ markdownEditor.selection = {
     delete content;
 
     if (charactersToRemove) {
-      editor.active.makeSelection(getPos().start - charactersToRemove, getPos().end);
+      BUE.active.makeSelection(getPos().start - charactersToRemove, getPos().end);
       selection.replace(new RegExp ("^ {" + charactersToRemove + "}"), "");
     }
 
@@ -1352,7 +1352,7 @@ markdownEditor.selection = {
     delete content;
 
     if (charactersToRemove) {
-      editor.active.makeSelection(getPos().start, getPos().end + charactersToRemove);
+      BUE.active.makeSelection(getPos().start, getPos().end + charactersToRemove);
       selection.replace(new RegExp(" {" + charactersToRemove + "}$"), "");
     }
 
@@ -1366,7 +1366,7 @@ markdownEditor.selection = {
       // so we only get 2 of them in total after the insertion.
       var content = getContent();
       for (var i = getPos().start - 1; content.charAt(i) === "\n"; i--) {
-        editor.active.makeSelection(getPos().start - 1, getPos().end);
+        BUE.active.makeSelection(getPos().start - 1, getPos().end);
       }
       delete content;
 
@@ -1374,7 +1374,7 @@ markdownEditor.selection = {
       // adjust the selection to exclude those line breaks.
       selection.replace(/^\n{0,2}/, "\n\n");
       var pos = getPos();
-      editor.active.makeSelection(Math.min(pos.start + 2, pos.end), pos.end);
+      BUE.active.makeSelection(Math.min(pos.start + 2, pos.end), pos.end);
       delete pos;
     }
 
@@ -1386,14 +1386,14 @@ markdownEditor.selection = {
       // so we can calculate the amount.
       var content = getContent();
       for (var i = getPos().end; content.charAt(i) === "\n"; i++) {
-        editor.active.makeSelection(getPos().start, getPos().end + 1);
+        BUE.active.makeSelection(getPos().start, getPos().end + 1);
       }
       delete content;
 
       selection.replace(/\n{0,2}$/, "\n\n");
 
       var pos = getPos();
-      editor.active.makeSelection(pos.start, Math.max(pos.end - 2, pos.start));
+      BUE.active.makeSelection(pos.start, Math.max(pos.end - 2, pos.start));
       delete pos;
     }
   },
@@ -1407,7 +1407,7 @@ markdownEditor.selection = {
    *   A boolean.
    */
   startsWith : function (substring) {
-    return editor.active.getSelection().substring(0, substring.length) === substring;
+    return BUE.active.getSelection().substring(0, substring.length) === substring;
   },
 
   /**
@@ -1419,7 +1419,7 @@ markdownEditor.selection = {
    *   A boolean.
    */
   endsWith : function (substring) {
-    var selection = editor.active.getSelection();
+    var selection = BUE.active.getSelection();
     return selection.substring(selection.length - substring.length) === substring;
   },
 
@@ -1445,8 +1445,8 @@ markdownEditor.selection = {
    * Puts the caret at the end of the current selection.
    */
   caretAtEnd : function () {
-    var pos = editor.active.posSelection();
-    editor.active.makeSelection(pos.end, pos.end);
+    var pos = BUE.active.posSelection();
+    BUE.active.makeSelection(pos.end, pos.end);
   },
 
   /**
@@ -1464,7 +1464,7 @@ markdownEditor.selection = {
     if (!(1 in arguments)) {
       suffix = prefix;
     }
-    markdownEditor.selection.replaceAll(prefix + editor.active.getSelection() + suffix);
+    markdownEditor.selection.replaceAll(prefix + BUE.active.getSelection() + suffix);
   },
 
   /**
@@ -1476,15 +1476,15 @@ markdownEditor.selection = {
     // Match  newlines and line  breaks, and  make sure  the match
     // ends with  a line break,  otherwise spaces in front  of the
     // first row will be excluded.
-    if (/^([\r\n\s]*[\r\n])/.test(editor.active.getSelection())) {
-      var pos = editor.active.posSelection();
-      editor.active.makeSelection(pos.start + RegExp.$1.length, pos.end);
+    if (/^([\r\n\s]*[\r\n])/.test(BUE.active.getSelection())) {
+      var pos = BUE.active.posSelection();
+      BUE.active.makeSelection(pos.start + RegExp.$1.length, pos.end);
     }
 
     // Equivalent as above, but for the end of the line.
-    if (/([\r\n][\r\n\s]*)$/.test(editor.active.getSelection())) {
-      var pos = editor.active.posSelection();
-      editor.active.makeSelection(pos.start, pos.end - RegExp.$1.length);
+    if (/([\r\n][\r\n\s]*)$/.test(BUE.active.getSelection())) {
+      var pos = BUE.active.posSelection();
+      BUE.active.makeSelection(pos.start, pos.end - RegExp.$1.length);
     }
   },
 
@@ -1538,10 +1538,12 @@ markdownEditor.selection = {
     // Only pass caret if it's specified, we don't make any assumption
     // on how replaceSelection handles optional arguments.
     if (caret) {
-      editor.active.replaceSelection(editor.active.getSelection().replace(search, replacement), caret);
+			BUE.active.replaceSelection(BUE.active.getSelection().replace(search, replacement), caret);
     }
     else {
-      editor.active.replaceSelection(editor.active.getSelection().replace(search, replacement));
+      console.log(BUE);
+
+      BUE.active.replaceSelection(BUE.active.getSelection().replace(search, replacement));
     }
   }
 };
@@ -1553,7 +1555,7 @@ markdownEditor.selection = {
 
 /**
  * Displays a dialog where the user can create a link. The reference is added to
- * the reference section of the editor.
+ * the reference section of the BUE.
  */
 markdownEditor.link = function () {
   var t = markdownEditor.t;
@@ -1565,7 +1567,7 @@ markdownEditor.link = function () {
   var hrefValue = "";
   var referenceValue = "";
   var titleValue = "";
-  var textValue = editor.active.getSelection();
+  var textValue = BUE.active.getSelection();
 
   // Create the dialog form.
   var form = createForm(
@@ -1617,7 +1619,7 @@ markdownEditor.link._process = function (form) {
 
   // The text inserted at the caret position.
   var textString = text !== reference ? "[" + text + "][" + reference + "]" : "[" + reference + "][]";
-  // The reference to add to the reference section of the editor.
+  // The reference to add to the reference section of the BUE.
   var ref = new Reference(referenceType, reference, href + (title ? ' "' + title + '"' : ""));
   markdownEditor.references._callback(textString, ref);
 };
@@ -1629,7 +1631,7 @@ markdownEditor.link._process = function (form) {
 
 /**
  * Displays a dialog where the user can add an inline image. The reference is
- * added to the reference section of the editor. The IMCE dialog is integrated
+ * added to the reference section of the BUE. The IMCE dialog is integrated
  * if IMCE is enabled.
  */
 markdownEditor.image = function () {
@@ -1641,7 +1643,7 @@ markdownEditor.image = function () {
   var hrefValue = "";
   var referenceValue = "";
   var titleValue = "";
-  var textValue = editor.active.getSelection();
+  var textValue = BUE.active.getSelection();
 
   // Creating the form for the dialog.
   var form = createForm(
@@ -1723,7 +1725,7 @@ markdownEditor.footnote = function () {
   var referenceValue = "";
   var textValue = "";
 
-  var contents = editor.active.getContent();
+  var contents = BUE.active.getContent();
 
   // Get the first available reference number.
   for (var i = 1; new RegExp("\\[\\^" + i + "\\]", "m").test(contents); i++);
@@ -1797,7 +1799,7 @@ markdownEditor.abbreviation = function () {
   var createForm = markdownEditor.dialog.createForm;
 
   // Default values for the form elements.
-  var abbreviationValue = editor.active.getSelection();
+  var abbreviationValue = BUE.active.getSelection();
   var textValue = "";
 
   // Create the dialog form.
@@ -1897,26 +1899,26 @@ markdownEditor.unorderedList = function () {
   mSelection.trim();
 
   // Remove OL enumeration if it's present
-  if (/^\d+\. /.test(editor.active.getSelection())) {
+  if (/^\d+\. /.test(BUE.active.getSelection())) {
     mSelection.replace(/^\d+\. /gm, "");
     mSelection.replace(/^ {4}/gm, "");
   }
 
   // If the selection is an unordered list.
-  if (/^\* /m.test(editor.active.getSelection())) {
+  if (/^\* /m.test(BUE.active.getSelection())) {
     // Remove the list characters.
     mSelection.replace(/^\* +/gm, "");
     mSelection.replace(/^ {4}/gm, "");
   }
   // If the selection is empty, insert a list item and put the caret
   // at the end of the insertion.
-  else if (editor.active.getSelection() === "") {
+  else if (BUE.active.getSelection() === "") {
     mSelection.replaceAll("*   ");
   }
   // Append an asterisk to every row that isn't indented.
   // Does not prefix empty rows.
   else {
-    var lines = editor.active.getSelection().split(/\r?\n|\r/);
+    var lines = BUE.active.getSelection().split(/\r?\n|\r/);
     var newLines = [];
 
     var prefixReg = /^(?: {4}|> )/;
@@ -1979,20 +1981,20 @@ markdownEditor.orderedList = function () {
   mSelection.trim();
 
   // If the selection is an unordered list, we remove the bullets.
-  if (/^\* /.test(editor.active.getSelection())) {
+  if (/^\* /.test(BUE.active.getSelection())) {
     mSelection.replace(/^\* {3}/gm, "");
     mSelection.replace(/^ {4}/gm, "");
   }
 
   // If  the list  is  formatted  as ordered  already,  we remove  the
   // enumeration.
-  if (/^ *\d+\./.test(editor.active.getSelection())) {
+  if (/^ *\d+\./.test(BUE.active.getSelection())) {
     mSelection.replace(/^ *\d+\.\s*/gm, "");
     mSelection.replace(/^ {4}/gm, "");
   }
   // If the selection  is empty, insert a list item  and put the caret
   // at the end of the insertion.
-  else if (editor.active.getSelection() === "") {
+  else if (BUE.active.getSelection() === "") {
     mSelection.replaceAll("1.  ");
   }
   // Insert numbers for  every row of the selection,  if the selection
@@ -2004,7 +2006,7 @@ markdownEditor.orderedList = function () {
       return (prefixCounter++) + ".  ";
     }
 
-    var lines = editor.active.getSelection().split(/\r?\n|\r/);
+    var lines = BUE.active.getSelection().split(/\r?\n|\r/);
     var newLines = [];
 
     // Matches a code block or block quote line.
@@ -2062,7 +2064,7 @@ markdownEditor.header = function () {
 
   var headerValue, textValue, idValue;
 
-  var selection = editor.active.getSelection();
+  var selection = BUE.active.getSelection();
 
   // If a header is selected, we extract the values.
   // If a value is unavailable, a default value is specified.
@@ -2074,7 +2076,7 @@ markdownEditor.header = function () {
   // Otherwise we assign default values.
   else {
     headerValue = 2;
-    textValue = editor.active.getSelection();
+    textValue = BUE.active.getSelection();
     idValue = "";
   }
 
@@ -2137,10 +2139,10 @@ markdownEditor.header._callback = function (form) {
   var headerHashes = markdownEditor.extras.string.repeat("#", headerType);
 
   // Insert the information and close the dialog.
-  editor.active.replaceSelection(headerHashes + " " + text + " " + id);
+  BUE.active.replaceSelection(headerHashes + " " + text + " " + id);
   markdownEditor.selection.lineBreak();
   markdownEditor.selection.caretAtEnd();
-  editor.dialog.close();
+  BUE.dialog.close();
 };
 
 
@@ -2163,7 +2165,7 @@ markdownEditor.codeInline = function () {
   }
   // Otherwise back ticks are added around the selection.
   else {
-    editor.active.replaceSelection("`" + editor.active.getSelection() + "`");
+    BUE.active.replaceSelection("`" + BUE.active.getSelection() + "`");
   }
 };
 
@@ -2211,7 +2213,7 @@ markdownEditor.strongEmphasis = function () {
   }
   // Otherwise asterisks are added around the selection.
   else {
-    markdownEditor.selection.replace(/^\**([\s\S]+?)\**$/, "**$1**");
+		markdownEditor.selection.replace(/^\**([\s\S]+?)\**$/, "**$1**");
   }
 };
 
@@ -2889,7 +2891,7 @@ markdownEditor.Table = (function() {
       markdownEditor.selection.replaceAll(tableString);
       markdownEditor.selection.lineBreak();
       markdownEditor.selection.caretAtEnd();
-      editor.dialog.close();
+      BUE.dialog.close();
     },
 
     /**
@@ -2909,7 +2911,7 @@ markdownEditor.Table = (function() {
       mDialog.getContent().appendChild(this.form);
       mDialog.focusFirst();
 
-      var tmp = document.getElementById("editor-dialog");
+      var tmp = document.getElementById("bue-dialog");
       function f () {
         tmp.style.left = parseInt(tmp.style.left) + 1 + "px";
       }
@@ -3303,10 +3305,10 @@ markdownEditor.DefinitionList = (function () {
       }
 
       // Insert the data and close the dialog.
-      editor.active.replaceSelection(lines.join("\n\n"));
+      BUE.active.replaceSelection(lines.join("\n\n"));
       markdownEditor.selection.lineBreak();
       markdownEditor.selection.caretAtEnd();
-      editor.dialog.close();
+      BUE.dialog.close();
     }
   };
 
@@ -3438,7 +3440,7 @@ markdownEditor.references = (function () {
      *   arrays of References.
      */
     parseReferences : function () {
-      var lines = editor.active.getContent().split(/\r?\n|\r/);
+      var lines = BUE.active.getContent().split(/\r?\n|\r/);
 
       // Available reference types.
       var references = {
@@ -3458,7 +3460,7 @@ markdownEditor.references = (function () {
             currentReference = RegExp.$1;
           }
         }
-        // If this line is below  a refernence header it's a reference
+        // If this line is below  a reference header it's a reference
         // or part of one.
         else if (currentReference) {
           references[currentReference] += line + "\n";
@@ -3531,7 +3533,7 @@ markdownEditor.references = (function () {
      *   Whether the header exists in the document.
      */
     hasHeader : function (header) {
-      return new RegExp(this.headerPrefix + header + this.headerSuffix).test(editor.active.getContent());
+      return new RegExp(this.headerPrefix + header + this.headerSuffix).test(BUE.active.getContent());
     },
 
     /**
@@ -3544,7 +3546,7 @@ markdownEditor.references = (function () {
     _printReferences : function (references) {
       // Remove existing references.
       this._clearReferences();
-      var textArea = editor.active.textArea;
+      var textArea = BUE.active.textArea;
 
       // Replace trailing line breaks with three line breaks.
       textArea.value = textArea.value.replace(/\n+$/, "\n\n\n");
@@ -3568,7 +3570,7 @@ markdownEditor.references = (function () {
       // Make sure all headers have 3 line breaks in front of them.
       for (var k = 0; k < order.length; k++) {
         if (this.hasHeader(order[k])) {
-          editor.active.setContent(editor.active.getContent().replace(new RegExp("\n*(?=<!-- " + order[k] + " -->)"), "\n\n"));
+          BUE.active.setContent(BUE.active.getContent().replace(new RegExp("\n*(?=<!-- " + order[k] + " -->)"), "\n\n"));
         }
       }
 
@@ -3580,7 +3582,7 @@ markdownEditor.references = (function () {
      * Removes all reference data from the document.
      */
     _clearReferences : function () {
-      var content = editor.active.getContent();
+      var content = BUE.active.getContent();
       var index;
 
       // Try to find the index of the first header.
@@ -3595,7 +3597,7 @@ markdownEditor.references = (function () {
       if (index == -1) return;
 
       // Set the content to itself but excluding the references.
-      editor.active.setContent(content.substring(0, index));
+      BUE.active.setContent(content.substring(0, index));
     },
 
     /**
@@ -3648,7 +3650,7 @@ markdownEditor.references = (function () {
 
     /**
      * Tries to find a reference matching the given identifier from the
-     * editor.
+     * BUE.
      *
      * @param type
      *   A reference type.
@@ -3702,7 +3704,7 @@ markdownEditor.references = (function () {
 
       // Store the current selection, since it may be modified before we read it
       // otherwise.
-      var selection = editor.active.posSelection();
+      var selection = BUE.active.posSelection();
 
       // If there exists a reference by this name already.
       if (references.hasReference(reference)) {
@@ -3724,17 +3726,17 @@ markdownEditor.references = (function () {
         }
       }
 
-      // Add the reference to the editor.
+      // Add the reference to the BUE.
       references.addReference(reference);
 
       // Select the initial selection, replace data and close the dialog.
-      editor.active.makeSelection(selection.start, selection.end);
+      BUE.active.makeSelection(selection.start, selection.end);
 
-      editor.active.replaceSelection(textString);
+      BUE.active.replaceSelection(textString);
       if (space) {
         markdownEditor.selection.space();
       }
-      editor.dialog.close();
+      BUE.dialog.close();
     }
 
   };

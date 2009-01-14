@@ -6,9 +6,6 @@ To get MarkdownEditor up and running, you must perform the following
 steps:
 
 1. Make sure the BUEditor and Markdown filter modules are installed.
-If you're using a BUEditor version older than 5.x-1.1 you will likely
-experience problems. See the bottom of this file for more information
-on this.
 
 2. Extract the compressed file containing MarkdownEditor.
 
@@ -16,13 +13,6 @@ on this.
 library folder and move the icons into BUEditor's icons directory.
 BUEditor is typically located at sites/all/modules/bueditor/ or
 modules/bueditor/ (seen from your drupal directory.)
-
-This implies that you have to name your editor markdown in order for
-the JS files to load properly. If you want the files to load for every
-editor you should put the files directly into bueditor/library/
-(without any subdirectories). See bueditor/library/README.txt  for
-more information.
-
 
 4. Create a new editor through the BUEditor administration interface.
 It is typically located at
@@ -32,12 +22,15 @@ If you choose to import buttons during this step, make sure to insert
 the  name of the editor before *each* form submission, otherwise you
 might have to start over.
 
-5. Go into  the  new editor's  settings  page and  choose to  import
+5. Go into the new editor's settings page and choose to import
 buttons, select MarkdownEditorButtons.csv and submit.
 
-6. Scroll down below the button declarations and press Save.
+6. In the field "Directory of editor library" enter:
+%BUEDITOR/library/markdown
 
-7. The plugin is now good to go. You will need to refresh the settings
+7. Scroll down below the button declarations and press Save.
+
+8. The plugin is now good to go. You will need to refresh the settings
 page once or twice if you want to make sure the demo editor works.
 
 
