@@ -747,7 +747,7 @@ markdownEditor.dialog = {
         // Create the form element.
         var formElement = tag(element.tagName, element.attributes, element.contents);
 
-        // If  the  element  is  a  select  and  optians  were
+        // If  the  element  is  a  select  and  options  were
         // specified  they  are   created  and  added  to  the
         // select. If  a selected  option was specified  it is
         // marked as selected in the select element.
@@ -779,7 +779,7 @@ markdownEditor.dialog = {
           element.label = [element.label, tag("span", { style : { color : "red" } }, "*")];
           element.attributes.className = "mandatory";
         }
-
+				
         // Create the label element.
         var label = tag("label", { htmlFor : element.attributes.id }, element.label);
 
@@ -1541,8 +1541,6 @@ markdownEditor.selection = {
 			BUE.active.replaceSelection(BUE.active.getSelection().replace(search, replacement), caret);
     }
     else {
-      console.log(BUE);
-
       BUE.active.replaceSelection(BUE.active.getSelection().replace(search, replacement));
     }
   }
