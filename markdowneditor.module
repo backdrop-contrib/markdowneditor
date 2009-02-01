@@ -1,0 +1,13 @@
+<?php
+/*
+ * Markdown Editor
+ * by Jakob Persson of NodeOne <jakob@nodeone.se>
+ * 
+ * Provides a toolbar for writing Markdown syntax with BUEditor.
+ * 
+ * Sponsored by
+ *   NodeOne - www.nodeone.se
+ *   
+ * TODO: Do not require uninstalling/reinstalling of module for it to detect
+ *       IMCE being subsequently installed.
+ */

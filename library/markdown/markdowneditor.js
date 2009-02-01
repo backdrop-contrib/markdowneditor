@@ -1538,7 +1538,7 @@ markdownEditor.selection = {
     // Only pass caret if it's specified, we don't make any assumption
     // on how replaceSelection handles optional arguments.
     if (caret) {
-			BUE.active.replaceSelection(BUE.active.getSelection().replace(search, replacement), caret);
+      BUE.active.replaceSelection(BUE.active.getSelection().replace(search, replacement), caret);
     }
     else {
       BUE.active.replaceSelection(BUE.active.getSelection().replace(search, replacement));
@@ -1566,7 +1566,7 @@ markdownEditor.link = function () {
   var referenceValue = "";
   var titleValue = "";
   var textValue = BUE.active.getSelection();
-	var inlineValue = null;
+  var inlineValue = null;
 
   // Create the dialog form.
   var form = createForm(
@@ -1574,7 +1574,7 @@ markdownEditor.link = function () {
     { label : t("Description"), attributes : { name : "title", value : titleValue } },
     { label : t("Reference"), attributes : { name : "reference", value : referenceValue } },
     { label : t("URL"), mandatory : true, attributes : { name : "href", value : hrefValue } },
-		{ label : t("Inline"), attributes : { name : "inline", type : "checkbox", checked: "checked", value: inlineValue } }
+    { label : t("Inline"), attributes : { name : "inline", type : "checkbox", checked: "checked", value: inlineValue } }
   );
 
   // Add a submit handler and various buttons.
@@ -1601,7 +1601,7 @@ markdownEditor.link._process = function (form) {
   var reference = form.elements.reference.value || text;
   var href = form.elements.href.value;
   var title = form.elements.title.value;
-	var inline = form.elements.inline.checked || false;
+  var inline = form.elements.inline.checked || false;
 
   // Validate input.
   markdownEditor.dialog.clearErrors();
@@ -1620,23 +1620,23 @@ markdownEditor.link._process = function (form) {
 
   if (inline) {
     // Insert inline link after caret position
-		markdownEditor.selection.insertBefore("[");
-		markdownEditor.selection.insertAfter("](" + href + ( title ? ' "' + title + '"' : '' ) + ")" );
-		BUE.dialog.close();
-	}
-	else {
-	  // The text inserted at the caret position.
-	  var textString = text !== reference ? "[" + text + "][" + reference + "]" : "[" + reference + "][]";
-	  // The reference to add to the reference section of the BUE.
-	  var ref = new Reference(referenceType, reference, href + (title ? ' "' + title + '"' : ""));
-	  markdownEditor.references._callback(textString, ref);		
-	}	
+    markdownEditor.selection.insertBefore("[");
+    markdownEditor.selection.insertAfter("](" + href + ( title ? ' "' + title + '"' : '' ) + ")" );
+    BUE.dialog.close();
+  }
+  else {
+    // The text inserted at the caret position.
+    var textString = text !== reference ? "[" + text + "][" + reference + "]" : "[" + reference + "][]";
+    // The reference to add to the reference section of the BUE.
+    var ref = new Reference(referenceType, reference, href + (title ? ' "' + title + '"' : ""));
+    markdownEditor.references._callback(textString, ref);
+  }
 };
-	
-	
-	/*******************************************************************************
-	 * IMAGE
-	 ******************************************************************************/
+
+
+/*******************************************************************************
+* IMAGE
+******************************************************************************/
 
 /**
  * Displays a dialog where the user can add an inline image. The reference is

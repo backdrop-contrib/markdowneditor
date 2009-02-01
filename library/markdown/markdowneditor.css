@@ -14,41 +14,41 @@
   background-color:white;
 }
 
-#editor-dialog .content {
+#editor-dialog .cnt {
 }
 
-#editor-dialog .content textarea,
-#editor-dialog .content select {
+#editor-dialog .cnt textarea,
+#editor-dialog .cnt select {
   width:150px;
 }
 
-#editor-dialog .content table input {
+#editor-dialog .cnt table input {
   float:left;
 }
 
-#editor-dialog .content .imce-button {
+#editor-dialog .cnt .imce-button {
   display:block;
   width:80px;
   float:left;
   margin-left:5px;
 }
 
-#editor-dialog .content form {
+#editor-dialog .cnt form {
   display:block;
   max-height:460px;
   overflow:auto;
 }
 
-#editor-dialog .content td {
+#editor-dialog .cnt td {
   vertical-align:top;
 }
 
-#editor-dialog .content td label {
+#editor-dialog .cnt td label {
   display:block;
   margin-top:5px;
 }
 
-#editor-dialog .content .td-element {
+#editor-dialog .cnt .td-element {
   min-width:260px;
 }
 
@@ -146,6 +146,7 @@
   min-width:380px;
   padding:10px;
   margin-bottom:10px;
+  width: 420px;
 }
 
 #markdowneditor-dialog-definition-list .content-container {

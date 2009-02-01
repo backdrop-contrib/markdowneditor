@@ -1,43 +1,28 @@
 // $Id$
 
-MarkdownEditor Installation Instructions
+Markdown Editor Installation Instructions
 
-To get MarkdownEditor up and running, you must perform the following
+To get MarkdownEditor up and running, you must carry out the following
 steps:
 
 1. Make sure the BUEditor and Markdown filter modules are installed.
 
-2. Extract the compressed file containing Markdown Editor. Browse to
-the folder using your operating system's file browser (Explorer in
-Windows, Finder in Mac OS X or Nautilus in Ubuntu) or use a terminal
-window to move/copy the files as described below.
+2. Extract the compressed file containing Markdown Editor to the module
+   directory (usually sites/all/modules).
 
-3. Move the markdown folder from library/markdown to BUEditor's
-library folder and move the icons into BUEditor's icons directory.
-BUEditor is typically located at sites/all/modules/bueditor/ or
-modules/bueditor/ (seen from your drupal directory.)
+3. Install the module as you would any other.
 
-4. Create a new editor through the BUEditor administration interface.
-It is typically located at
-admin/settings/bueditor
-
-NOTE:
-As you import the Markdown Editor buttons to BUEditor, make sure to insert
-the name of the editor (markdowneditor) before *each* form submission, 
-otherwise you might have to start over. The name is lost between submissions,
-it's a bug in BUEditor, not Markdown Editor, that remains to be fixed.
-
-5. Scroll down to 'Import Buttons', select 'buttons.csv'
-from the directory where you extracted markdowneditor, click 'Import'.
-
-6. Expand the 'Editor Paths' form sub section, in the field
-'Directory of editor library' enter:
-%BUEDITOR/library/markdown
-
-7. Scroll down til you see the 'Save configuration' button and click it.
-
-8. The plugin is now ready for use. You will need to refresh the settings
-page once or twice if you want to make sure the demo editor works.
+4. Customize the editor and set up what roles may use it:
+   admin/settings/bueditor
+  
+NOTE:   
+* If you install or uninstall IMCE at a later point, you must disable,
+   uninstall and reinstall the module as some code is only run at install.
+   This may change for the stable release.
+   
+* If you make changes to the buttons and later uninstall the module, you
+  changes will be LOST! To prevent that, export your buttons as a CSV file
+  (see BUEditor's README for more info).
 
 -------------------------------------------------------------------------------
 
@@ -49,10 +34,3 @@ project page's issue tracker at drupal.org. Please include detailed
 instructions so that we can recreate the problem and effectively analyze
 and fix it.
 http://drupal.org/project/markdowneditor
-
-
-NOTE:
-There is a patch for a problem when saving buttons available at
-http://drupal.org/node/151445. This patch was included in buEditor
-5.x-1.1.  If you make sure to not save your buttons more than once per
-import the update is not necessary, but still recommended.
