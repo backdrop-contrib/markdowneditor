@@ -347,7 +347,7 @@ window.markdownEditor = window.markdownEditor || {};
  * @return
  *  The localized string.
  */
-markdownEditor.t = function (string) {
+markdownEditor.t = Drupal.t || function (string) {
   return string;
 };
 
@@ -367,7 +367,7 @@ markdownEditor.settings = {};
  *   Whether the IMCE module is enabled.
  */
 markdownEditor.settings.isIMCEEnabled = function () {
-  return markdownEditor.settings.IMCEPath !== "";
+  return typeof markdownEditor.settings.IMCEPath !== 'undefined';
 };
 
 /**
@@ -1006,8 +1006,8 @@ markdownEditor.dialog = {
       if (target !== this) return false;
 
       // Open the window.
-      window.open(markdownEditor.settings.IMCEPath, "icmeBrowse", "width=640, height=480");
-
+      MDEImceWindow = window.open(markdownEditor.settings.IMCEPath, "icmeBrowse", "width=640, height=480");
+      MDEImceWindow['imceOnLoad'] = markdownEditor.dialog.imceWindowLoad;//set a function to be executed when imce loads.
       return false;
     };
 
@@ -1019,7 +1019,7 @@ markdownEditor.dialog = {
       value : t("Browse..."),
       onclick : triggerFunction
     })));
-
+/*
     // IMCE  wants a global  function, so  it's added  temporarily and
     // removed when the data is received.
     var functionName = windowName + "ImceFinish";
@@ -1028,8 +1028,30 @@ markdownEditor.dialog = {
       resultElement.value = path;
       delete functionName;
     };
-
+*/
   },
+
+  /**
+   * Handlers for IMCE window
+   * Taken more or less unmodified from BUEditor's default buttons JS
+   * @param {Object} win
+   */
+  imceWindowLoad : function (win) {
+		win.imce.setSendTo(Drupal.t('Send to @app', {'@app': 'BUEditor'}), markdownEditor.dialog.imceWindowFinish);
+    $(window).unload(function() {
+      if (MDEImceWindow && !MDEImceWindow.closed) MDEImceWindow.close();
+    });
+  },
+	
+	imceWindowFinish : function (file, win) {
+	  var el = document.forms['markdowneditor-dialog-form'].elements;
+	  var val = {'text' : file.name, 'title' : file.name, 'href' : file.url}
+	  for (var i in val) {
+	    if (!el[i].value) el[i].value = val[i];
+	  }
+	  win.blur();//or close()
+	  el[el.length-1].focus();//focus on last element.
+	},
 
   /**
    * Gives focus to the first form element in the dialog.
@@ -1620,8 +1642,8 @@ markdownEditor.link._process = function (form) {
 
   if (inline) {
     // Insert inline link after caret position
-    markdownEditor.selection.insertBefore("[");
-    markdownEditor.selection.insertAfter("](" + href + ( title ? ' "' + title + '"' : '' ) + ")" );
+    var replaceString = "[" + text + "](" + href + ( title ? ' "' + title + '"' : '' ) + ")";
+    markdownEditor.selection.replaceAll(replaceString);
     BUE.dialog.close();
   }
   else {
