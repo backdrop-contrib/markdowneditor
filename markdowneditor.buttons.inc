@@ -11,7 +11,7 @@
  */
 
 $help_url = url('admin/help/markdowneditor', array('absolute' => true));
-$imce_url = module_exists('imce') && user_access('access imce') ? url('imce/browse') : '';
+$imce_url = module_exists('imce') ? url('imce/browse') : '';
 
 $js_helpPath = "markdownEditor.settings.helpPath = '$help_url';";
 $js_imceURL = ( $imce_url ? "markdownEditor.settings.IMCEPath = '$imce_url';" : '' );
@@ -20,16 +20,19 @@ $js_addStyleSheet = 'markdownEditor.settings.addStyleSheet();';
 
 // Define buttons
 //
-// eid
-// title
-// code/content
-// image
-// shortcut key
-// weight
+// 0: eid
+// 1: title
+// 2: code/content
+// 3: image
+// 4: shortcut key
+// 5: weight
 
 $mde_buttons = array();
 
-$mde_buttons[] = array(
+// Increment counter for array keys
+$i = 0;
+
+$mde_buttons[$i++] = array(
 $eid,
 t("Make selected text into a header"),
   "js: $js_helpPath $js_imceURL $js_cssPath $js_addStyleSheet markdownEditor.header();", 
@@ -38,7 +41,7 @@ t("Make selected text into a header"),
 -10
 );
 
-$mde_buttons[] = array(
+$mde_buttons[$i++] = array(
 $eid,
 t("Italics: Make selected text emphasized"),
   "js: markdownEditor.emphasis();",
@@ -47,7 +50,7 @@ t("Italics: Make selected text emphasized"),
 -9
 );
 
-$mde_buttons[] = array(
+$mde_buttons[$i++] = array(
 $eid,
 t("Make selected text strong"),
   "js: markdownEditor.strongEmphasis();", 
@@ -56,7 +59,7 @@ t("Make selected text strong"),
 -8
 );
 
-$mde_buttons[] = array(
+$mde_buttons[$i++] = array(
 $eid,
 t("Format selected text as code"),
   "js: markdownEditor.codeInline();", 
@@ -65,7 +68,7 @@ t("Format selected text as code"),
 -7
 );
 
-$mde_buttons[] = array(
+$mde_buttons[$i++] = array(
 $eid,
 t("Format selected text as a code block"),
   "js: markdownEditor.codeBlock();", 
@@ -74,7 +77,7 @@ t("Format selected text as a code block"),
 -6
 );
 
-$mde_buttons[] = array(
+$mde_buttons[$i++] = array(
 $eid,
 t("Make selected text into a block quote"),
     "js: markdownEditor.blockQuote();", 
@@ -83,7 +86,7 @@ t("Make selected text into a block quote"),
 -5
 );
 
-$mde_buttons[] = array(
+$mde_buttons[$i++] = array(
 $eid,
 t("Make selected text into an ordered list (numbered)"),
     "js: markdownEditor.orderedList();", 
@@ -92,7 +95,7 @@ t("Make selected text into an ordered list (numbered)"),
 -4
 );
 
-$mde_buttons[] = array(
+$mde_buttons[$i++] = array(
 $eid,
 t("Make selected text into an unordered list (bullets)"),
     "js: markdownEditor.unorderedList();", 
@@ -101,7 +104,7 @@ t("Make selected text into an unordered list (bullets)"),
 -3
 );
 
-$mde_buttons[] = array(
+$mde_buttons[$i++] = array(
 $eid,
 t("Insert a definition list"),
     "js: $js_helpPath $js_imceURL $js_cssPath $js_addStyleSheet new markdownEditor.DefinitionList();", 
@@ -110,7 +113,7 @@ t("Insert a definition list"),
 -2
 );
 
-$mde_buttons[] = array(
+$mde_buttons[$i++] = array(
 $eid,
 t("Insert a table"),
     "js: $js_helpPath $js_imceURL $js_cssPath $js_addStyleSheet new markdownEditor.Table();", 
@@ -119,7 +122,7 @@ t("Insert a table"),
 -1
 );
 
-$mde_buttons[] = array(
+$mde_buttons[$i++] = array(
 $eid,
 ("Insert an abbreviation (word or acronym with definition)"),
     "js: $js_helpPath $js_imceURL $js_cssPath $js_addStyleSheet markdownEditor.abbreviation();", 
@@ -128,7 +131,7 @@ $eid,
 0
 );
 
-$mde_buttons[] = array(
+$mde_buttons[$i++] = array(
 $eid,
 t("Insert a footnote"),
     "js: $js_helpPath $js_imceURL $js_cssPath $js_addStyleSheet markdownEditor.footnote();", 
@@ -137,7 +140,7 @@ t("Insert a footnote"),
 1
 );
 
-$mde_buttons[] = array(
+$mde_buttons[$i++] = array(
 $eid,
 t("Make text into an autolink (turns URLs in links, turns words into section identifiers for navigating the document)"),
     "js: $js_helpPath $js_imceURL $js_cssPath $js_addStyleSheet markdownEditor.autoLink();", 
@@ -146,7 +149,7 @@ t("Make text into an autolink (turns URLs in links, turns words into section ide
 2
 );
 
-$mde_buttons[] = array(
+$mde_buttons[$i++] = array(
 $eid,
 t("Make text into a link (turns text into a link with more options)"),
     "js: $js_helpPath $js_imceURL $js_cssPath $js_addStyleSheet markdownEditor.link();", 
@@ -155,7 +158,7 @@ t("Make text into a link (turns text into a link with more options)"),
 3
 );
 
-$mde_buttons[] = array(
+$mde_buttons[$i++] = array(
 $eid,
 t("Insert an image"),
     "js: $js_helpPath $js_imceURL $js_cssPath $js_addStyleSheet markdownEditor.image();", 
@@ -164,7 +167,7 @@ t("Insert an image"),
 4
 );
 
-$mde_buttons[] = array(
+$mde_buttons[$i++] = array(
 $eid,
 t("Insert a line break"),
     "js: $js_helpPath markdownEditor.lineBreak();", 
@@ -173,7 +176,7 @@ t("Insert a line break"),
 5
 );
 
-$mde_buttons[] = array(
+$mde_buttons[$i++] = array(
 $eid,
 t("Insert a horizontal ruler (horizontal line)"),
     "js: $js_helpPath markdownEditor.horizontalRuler();",
@@ -182,7 +185,7 @@ t("Insert a horizontal ruler (horizontal line)"),
 6
 );
 
-$mde_buttons[] = array(
+$mde_buttons[$i++] = array(
 $eid,
 t("Help"),
     "js: $js_helpPath $js_imceURL $js_cssPath $js_addStyleSheet markdownEditor.help();", 

@@ -4,7 +4,7 @@
  * @file
  * MarkdownEditor JS library for BUEditor.
  *
- * @author Jakob Persson <jakob@imbridge.com>
+ * @author Jakob Persson <jakob@nodeone.se>
  * @author Adam Bergmark
  */
 
@@ -344,10 +344,12 @@ window.markdownEditor = window.markdownEditor || {};
  *
  * @param string
  *  The string to localize.
+ * @param args
+ *  String arguments to be replaced.
  * @return
  *  The localized string.
  */
-markdownEditor.t = Drupal.t || function (string) {
+markdownEditor.t = Drupal.t || function (string, args) {
   return string;
 };
 
@@ -1019,30 +1021,25 @@ markdownEditor.dialog = {
       value : t("Browse..."),
       onclick : triggerFunction
     })));
-/*
-    // IMCE  wants a global  function, so  it's added  temporarily and
-    // removed when the data is received.
-    var functionName = windowName + "ImceFinish";
-    window[functionName] = function (path, w, h, s, win) {
-      win.close();
-      resultElement.value = path;
-      delete functionName;
-    };
-*/
   },
 
   /**
-   * Handlers for IMCE window
-   * Taken more or less unmodified from BUEditor's default buttons JS
+   * Display "send to bueditor" link and bind function to IMCE window unload event
    * @param {Object} win
    */
   imceWindowLoad : function (win) {
-		win.imce.setSendTo(Drupal.t('Send to @app', {'@app': 'BUEditor'}), markdownEditor.dialog.imceWindowFinish);
-    $(window).unload(function() {
+		win.imce.setSendTo(markdownEditor.t('Send to @app', {'@app': 'BUEditor'}), markdownEditor.dialog.imceWindowFinish);
+    // TODO: Do not use jQuery here:
+		$(window).unload(function() {
       if (MDEImceWindow && !MDEImceWindow.closed) MDEImceWindow.close();
     });
   },
 	
+	/**
+	 * Fill BUE dialog fields and close IMCE window
+	 * @param {Object} file
+	 * @param {Object} win
+	 */
 	imceWindowFinish : function (file, win) {
 	  var el = document.forms['markdowneditor-dialog-form'].elements;
 	  var val = {'text' : file.name, 'title' : file.name, 'href' : file.url}

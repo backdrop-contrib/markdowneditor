@@ -1,3 +1,9 @@
+2009-02-04
+ - Fixed: A bug causing IMCE "Browse..." button not to show due to checking for
+   a non-existing permission.
+ - Added: Improved installer that keeps track of dependencies without limiting
+   the site admin's options with regards to altering button icons and titles.
+
 2009-02-02b:
  - Fixed: Inline links do not require text to be previously selected for them 
    to have text, they can now be created without any pre-typed link text.

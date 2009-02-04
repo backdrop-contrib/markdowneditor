@@ -2,7 +2,7 @@
 
 Markdown Editor Installation Instructions
 
-To get MarkdownEditor up and running, you must carry out the following
+To get Markdown Editor up and running, you must carry out the following
 steps:
 
 1. Make sure the BUEditor and Markdown filter modules are installed.
@@ -14,15 +14,32 @@ steps:
 
 4. Customize the editor and set up what roles may use it:
    admin/settings/bueditor
-  
-NOTE:   
-* If you install or uninstall IMCE at a later point, you must disable,
-   uninstall and reinstall the module as some code is only run at install.
-   This may change for the stable release.
+ 
+You can customize the editor, use other icons or captions if you like. 
+See the BUEditor readme file for a comprehensive guide to how you can
+customize the Markdown Editor button bar. 
+
++-------------------------------------------------------------------------+
+| ############################## WARNING ################################ |
+| Any customizations you make will be lost if you uninstall the editor    |
+| without first exporting your customized buttons as a CSV file. Once     |
+| you have uninstalled Markdown Editor you can restore your buttons using |
+| the CSV file you saved.                                                 |
+| How this is done is explained in the BUEditor readme file.              |
++-------------------------------------------------------------------------+ 
+ 
+To uninstall:
    
-* If you make changes to the buttons and later uninstall the module, you
-  changes will be LOST! To prevent that, export your buttons as a CSV file
-  (see BUEditor's README for more info).
+1. Uncheck the module on the modules page
+   admin/build/modules
+   to disable it
+   
+2. Go to
+   admin/build/modules/uninstall
+   to uninstall the module. UNINSTALLING MARKDOWN EDITOR WILL REMOVE
+   ANY TRACE OF IT FROM THE DATABASE INCLUDING THE MARKDOWMNEDITOR
+   BUTTON SET FOR BUEDITOR!
+
 
 -------------------------------------------------------------------------------
 
