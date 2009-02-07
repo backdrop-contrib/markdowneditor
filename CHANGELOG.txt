@@ -1,3 +1,7 @@
+2009-02-07
+ - Added: POT file.
+ - Committed version 1.0
+
 2009-02-04
  - Fixed: A bug causing IMCE "Browse..." button not to show due to checking for
    a non-existing permission.

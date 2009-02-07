@@ -46,7 +46,7 @@ To uninstall:
 KNOWN BUGS:
 Under certain circumstances, the editor may append empty lines at the
 bottom of the editor text area.
-If you experience problem using this editor, please file an issue in its
+If you experience problems using this editor, please file an issue in its
 project page's issue tracker at drupal.org. Please include detailed
 instructions so that we can recreate the problem and effectively analyze
 and fix it.
