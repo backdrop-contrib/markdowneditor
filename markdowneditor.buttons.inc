@@ -35,9 +35,9 @@ $i = 0;
 $mde_buttons[$i++] = array(
 $eid,
 t("Make selected text into a header"),
-  "js: $js_helpPath $js_imceURL $js_cssPath $js_addStyleSheet markdownEditor.header();", 
-  "md-make-header.gif", 
-  "", 
+  "js: $js_helpPath $js_imceURL $js_cssPath $js_addStyleSheet markdownEditor.header();",
+  "md-make-header.gif",
+  "",
 -10
 );
 
@@ -53,97 +53,97 @@ t("Italics: Make selected text emphasized"),
 $mde_buttons[$i++] = array(
 $eid,
 t("Make selected text strong"),
-  "js: markdownEditor.strongEmphasis();", 
-  "md-make-strong.gif", 
-  "", 
+  "js: markdownEditor.strongEmphasis();",
+  "md-make-strong.gif",
+  "",
 -8
 );
 
 $mde_buttons[$i++] = array(
 $eid,
 t("Format selected text as code"),
-  "js: markdownEditor.codeInline();", 
-  "md-make-code.gif", 
-  "", 
+  "js: markdownEditor.codeInline();",
+  "md-make-code.gif",
+  "",
 -7
 );
 
 $mde_buttons[$i++] = array(
 $eid,
 t("Format selected text as a code block"),
-  "js: markdownEditor.codeBlock();", 
-  "md-make-code-block.gif", 
-  "", 
+  "js: markdownEditor.codeBlock();",
+  "md-make-code-block.gif",
+  "",
 -6
 );
 
 $mde_buttons[$i++] = array(
 $eid,
 t("Make selected text into a block quote"),
-    "js: markdownEditor.blockQuote();", 
-    "md-make-quote.gif", 
-    "", 
+    "js: markdownEditor.blockQuote();",
+    "md-make-quote.gif",
+    "",
 -5
 );
 
 $mde_buttons[$i++] = array(
 $eid,
 t("Make selected text into an ordered list (numbered)"),
-    "js: markdownEditor.orderedList();", 
-    "md-make-ol.gif", 
-    "", 
+    "js: markdownEditor.orderedList();",
+    "md-make-ol.gif",
+    "",
 -4
 );
 
 $mde_buttons[$i++] = array(
 $eid,
 t("Make selected text into an unordered list (bullets)"),
-    "js: markdownEditor.unorderedList();", 
-    "md-make-ul.gif", 
-    "", 
+    "js: markdownEditor.unorderedList();",
+    "md-make-ul.gif",
+    "",
 -3
 );
 
 $mde_buttons[$i++] = array(
 $eid,
 t("Insert a definition list"),
-    "js: $js_helpPath $js_imceURL $js_cssPath $js_addStyleSheet new markdownEditor.DefinitionList();", 
-    "md-add-dl.gif", 
-    "", 
+    "js: $js_helpPath $js_imceURL $js_cssPath $js_addStyleSheet new markdownEditor.DefinitionList();",
+    "md-add-dl.gif",
+    "",
 -2
 );
 
 $mde_buttons[$i++] = array(
 $eid,
 t("Insert a table"),
-    "js: $js_helpPath $js_imceURL $js_cssPath $js_addStyleSheet new markdownEditor.Table();", 
-    "md-add-table.gif", 
-    "", 
+    "js: $js_helpPath $js_imceURL $js_cssPath $js_addStyleSheet new markdownEditor.Table();",
+    "md-add-table.gif",
+    "",
 -1
 );
 
 $mde_buttons[$i++] = array(
 $eid,
 ("Insert an abbreviation (word or acronym with definition)"),
-    "js: $js_helpPath $js_imceURL $js_cssPath $js_addStyleSheet markdownEditor.abbreviation();", 
-    "md-add-abbreviation.gif", 
-    "", 
+    "js: $js_helpPath $js_imceURL $js_cssPath $js_addStyleSheet markdownEditor.abbreviation();",
+    "md-add-abbreviation.gif",
+    "",
 0
 );
 
 $mde_buttons[$i++] = array(
 $eid,
 t("Insert a footnote"),
-    "js: $js_helpPath $js_imceURL $js_cssPath $js_addStyleSheet markdownEditor.footnote();", 
-    "md-add-footnote.gif", 
-    "", 
+    "js: $js_helpPath $js_imceURL $js_cssPath $js_addStyleSheet markdownEditor.footnote();",
+    "md-add-footnote.gif",
+    "",
 1
 );
 
 $mde_buttons[$i++] = array(
 $eid,
 t("Make text into an autolink (turns URLs in links, turns words into section identifiers for navigating the document)"),
-    "js: $js_helpPath $js_imceURL $js_cssPath $js_addStyleSheet markdownEditor.autoLink();", 
+    "js: $js_helpPath $js_imceURL $js_cssPath $js_addStyleSheet markdownEditor.autoLink();",
     "md-add-autolink.gif",
     "",
 2
@@ -152,27 +152,27 @@ t("Make text into an autolink (turns URLs in links, turns words into section ide
 $mde_buttons[$i++] = array(
 $eid,
 t("Make text into a link (turns text into a link with more options)"),
-    "js: $js_helpPath $js_imceURL $js_cssPath $js_addStyleSheet markdownEditor.link();", 
-    "md-make-link.gif", 
-    "", 
+    "js: $js_helpPath $js_imceURL $js_cssPath $js_addStyleSheet markdownEditor.link();",
+    "md-make-link.gif",
+    "",
 3
 );
 
 $mde_buttons[$i++] = array(
 $eid,
 t("Insert an image"),
-    "js: $js_helpPath $js_imceURL $js_cssPath $js_addStyleSheet markdownEditor.image();", 
-    "md-add-picture.gif", 
-    "", 
+    "js: $js_helpPath $js_imceURL $js_cssPath $js_addStyleSheet markdownEditor.image();",
+    "md-add-picture.gif",
+    "",
 4
 );
 
 $mde_buttons[$i++] = array(
 $eid,
 t("Insert a line break"),
-    "js: $js_helpPath markdownEditor.lineBreak();", 
-    "md-add-line.gif", 
-    "", 
+    "js: $js_helpPath markdownEditor.lineBreak();",
+    "md-add-line.gif",
+    "",
 5
 );
 
@@ -188,7 +188,7 @@ t("Insert a horizontal ruler (horizontal line)"),
 $mde_buttons[$i++] = array(
 $eid,
 t("Help"),
-    "js: $js_helpPath $js_imceURL $js_cssPath $js_addStyleSheet markdownEditor.help();", 
+    "js: $js_helpPath $js_imceURL $js_cssPath $js_addStyleSheet markdownEditor.help();",
     "md-help.gif",
     "",
 7
