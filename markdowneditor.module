@@ -11,24 +11,23 @@
  */
 
 /**
- * Implementation of hook_enable()
+ * Implementation of hook_form_alter()
  */
-function markdowneditor_enable() {
+function markdowneditor_form_system_modules_alter(&$form, &$form_state) {
+  $form['#submit'][] = '_markdowneditor_form_system_modules_submit';
+}
+
+/**
+ * Submit handler
+ */
+function _markdowneditor_form_system_modules_submit($form, &$form_stat) {
   _markdowneditor_update_buttons();
 }
 
 /**
- * Implementation of hook_disable()
- */
-function markdowneditor_disable() {
-  _markdowneditor_update_buttons();
-}
-
-/**
- * Update button definitions.
+ * Update button definitions when moodules MDE depends on are enabled/disabled
  */
 function _markdowneditor_update_buttons() {
-
   // Set up variables
   $path = drupal_get_path('module', 'markdowneditor');
 
@@ -38,10 +37,11 @@ function _markdowneditor_update_buttons() {
   // Include default button definitions
   require_once("$path/markdowneditor.buttons.inc");
 
-  if ($buttons) {
+  if ($buttons && !empty($mde_buttons)) {
+
     // Calculate table content fingerprint and compare to stored copy
     // only update table if contents have changed
-    $fprint = md5($js_helpPath . $js_imceURL . $js_cssPath .$js_addStyleSheet);
+    $fprint = md5($js_helpPath . $js_imceURL);
 
     if ($fprint != variable_get('markdowneditor_content_fprint', null)) {
 
@@ -54,5 +54,4 @@ function _markdowneditor_update_buttons() {
       }
     }
   }
-
 }

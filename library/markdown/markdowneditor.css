@@ -56,13 +56,20 @@
   border: 1px solid #B3D8EF;
   background-color:transparent;
   background-image:none;
+  margin: 0 10px 0 0;
 }
 
 #editor-dialog table,
 #editor-dialog tbody {
   margin:0;
+  overflow: auto;
 }
 
+/* Scrollbars to allow content that overflows dialog */
+.bue-popup-body {
+  overflow: auto;
+  padding-bottom: 10px;
+}
 
 /*******************************************************************************
  * BUTTONS
@@ -119,8 +126,19 @@
   width:250px;
 }
 
-#markdowneditor-dialog-link tbody,
-#markdowneditor-dialog-image tbody {
+#markdowneditor-dialog-image .imce-button-wrapper,
+#markdowneditor-dialog-link .imce-button-wrapper {
+  display: inline;
+  margin: 0 0 0 5px;
+}
+
+#markdowneditor-dialog-image .td-element input.imce-button,
+#markdowneditor-dialog-link .td-element input.imce-button {
+  width: 80px;
+}
+
+#markdowneditor-dialog-image tbody,
+#markdowneditor-dialog-link tbody {
   display:block;
   padding-bottom:10px;
 }
@@ -287,4 +305,3 @@
 #markdowneditor-dialog-table .header-row input {
   width:145px;
 }
-

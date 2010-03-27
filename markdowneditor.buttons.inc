@@ -10,13 +10,13 @@
  *   NodeOne - www.nodeone.se
  */
 
-$help_url = url('admin/help/markdowneditor', array('absolute' => true));
-$imce_url = module_exists('imce') ? url('imce/browse') : '';
+$help_url = url('admin/help/markdowneditor');
+$imce_url = ( module_exists('imce') ? url('imce/browse') : null );
 
 $js_helpPath = "markdownEditor.settings.helpPath = '$help_url';";
 $js_imceURL = ( $imce_url ? "markdownEditor.settings.IMCEPath = '$imce_url';" : '' );
-$js_cssPath = "markdownEditor.settings.cssPath = '". url("$path/library/markdown/markdowneditor.css", array('absolute' => true)) ."';";
-$js_addStyleSheet = 'markdownEditor.settings.addStyleSheet();';
+//$js_cssPath = "markdownEditor.settings.cssPath = '". url("$path/library/markdown/markdowneditor.css") ."';";
+//$js_addStyleSheet = 'markdownEditor.settings.addStyleSheet();';
 
 // Define buttons
 //

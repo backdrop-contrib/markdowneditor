@@ -54,9 +54,12 @@ function _markdowneditor_insert_latest($name = 'default') {
   $name = 'markdowneditor';
   $path = drupal_get_path('module', 'markdowneditor');
 
+  // Set up library paths
+  $library_paths = "$path/library/markdown/markdowneditor.js\n$path/library/markdown/markdowneditor.css\n%BUEDITOR/library/bue.popup.js\n%BUEDITOR/library/bue.popup.css";
+
   // Add editor
   $sql = "INSERT INTO {bueditor_editors} (name, pages, excludes, iconpath, librarypath) VALUES ('%s', '%s', '%s', '%s', '%s')";
-  db_query($sql, $name, "node/*\ncomment/*", 'edit-log', "$path/icons", "$path/library/markdown");
+  db_query($sql, $name, "node/*\ncomment/*", 'edit-log', "$path/icons", $library_paths);
 
   // Get editor's eid
   $eid = db_last_insert_id('bueditor_editors', 'eid');
@@ -86,7 +89,8 @@ function _markdowneditor_insert_latest($name = 'default') {
   variable_set('markdowneditor_eid', $eid);
 
   // Calculate and store a hash of configuration values so we can detect changes later on
-  $fprint = md5($js_helpPath . $js_imceURL . $js_cssPath . $js_addStyleSheet);
+  //$fprint = md5($js_helpPath . $js_imceURL . $js_cssPath . $js_addStyleSheet);
+  $fprint = md5($js_helpPath . $js_imceURL);
   variable_set('markdowneditor_content_fprint', $fprint);
 
 

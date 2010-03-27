@@ -605,7 +605,7 @@ markdownEditor.dialog = {
    *  An HTMLElement.
    */
   getContent : function () {
-    return markdownEditor.extras.getElementByClassName("cnt", BUE.dialog.popup);
+    return BUE.dialog.popup ? markdownEditor.extras.getElementByClassName("cnt", BUE.dialog.popup) : markdownEditor.extras.getElementByClassName("bue-popup-content", BUE.dialog);
   },
 
   /**
@@ -927,7 +927,7 @@ markdownEditor.dialog = {
    *   The string title.
    */
   getTitle : function () {
-    return BUE.dialog.popup.rows[0].cells[0].innerHTML;
+    return BUE.dialog.popup ? BUE.dialog.popup.rows[0].cells[0].innerHTML : markdownEditor.extras.getElementByClassName("bue-popup-title", BUE.dialog).innerHTML;
   },
 
   /**
@@ -1015,7 +1015,7 @@ markdownEditor.dialog = {
 
     // Append the button and assign its onclick handler that opens the
     // IMCE browse window.
-    parent.appendChild(tag("div", null, tag("input", {
+    parent.appendChild(tag("div", { className : "imce-button-wrapper" }, tag("input", {
       type : "button",
       className : "imce-button",
       value : t("Browse..."),
