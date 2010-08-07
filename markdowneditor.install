@@ -89,7 +89,6 @@ function _markdowneditor_insert_latest($name = 'default') {
   variable_set('markdowneditor_eid', $eid);
 
   // Calculate and store a hash of configuration values so we can detect changes later on
-  //$fprint = md5($js_helpPath . $js_imceURL . $js_cssPath . $js_addStyleSheet);
   $fprint = md5($js_helpPath . $js_imceURL);
   variable_set('markdowneditor_content_fprint', $fprint);
 
