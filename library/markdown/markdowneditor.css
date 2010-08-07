@@ -98,7 +98,7 @@
  * CLEARFIX
  ******************************************************************************/
 
-.clearfix:after,
+#editor-dialog .clearfix:after,
 #editor-dialog:after,
 #markdowneditor-dialog-definition-list .content-row:after,
 #markdowneditor-dialog-definition-list .header-row:after {
@@ -109,7 +109,7 @@
   visibility: hidden;
 }
 
-.clearfix,
+#editor-dialog .clearfix,
 #editor-dialog,
 #markdowneditor-dialog-definition-list .content-row,
 #markdowneditor-dialog-definition-list .header-row {
