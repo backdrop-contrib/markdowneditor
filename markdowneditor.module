@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /*
  * Markdown Editor
  * by Jakob Persson of NodeOne <jakob@nodeone.se>

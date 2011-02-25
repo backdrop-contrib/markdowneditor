@@ -1,4 +1,3 @@
-; $Id$
 name = "Markdown Editor for BUEditor"
 description = "Provides a toolbar for writing Markdown syntax with BUEditor."
 package = Other
