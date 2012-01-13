@@ -1,4 +1,3 @@
-
 /**
  * @file
  * MarkdownEditor JS library for BUEditor.
@@ -136,9 +135,9 @@ Cactus.DOM.Array = (function () {
      */
     for (var i = 0; i < array.length; i++) {
       if (shouldRemove (element === array [i])) {
-	removed = i;
+        removed = i;
       } else {
-	newArray.push (array[i]);
+        newArray.push (array[i]);
       }
     }
     /*
@@ -147,7 +146,7 @@ Cactus.DOM.Array = (function () {
     if (array.length > newArray.length) {
       Array.empty (array);
       while (newArray.length) {
-	array.push (newArray.shift());
+        array.push (newArray.shift());
       }
     }
 
@@ -162,70 +161,70 @@ Cactus.DOM.Array = (function () {
  * class names for HTML Elements.
  */
 Cactus.DOM.ClassNames = (function () {
-    function ClassNames () {
+  function ClassNames () {
 
-    } ClassNames.prototype = {
-	/**
-         * Adds a class to an object. But only if the class doesn't already
-         * exist on the object
-         *
-         * @param HTMLElement o
-         * @param string className
-         */
-	add : function (o, className) {
-            // Only add if the className isn't already added
-	    if (!this.has(o, className)) {
-		// If the className property is empty, we can simply overwrite
-		// it.
-		if (!o.className) {
-		    o.className = className;
-		    // if it isn't empty, we have to prepend a space so that
-		    // "a" and "b" becomes "a b".
-		} else {
-		    o.className += " " + className;
-		}
-	    }
-	},
-	/**
-         * Checks if a given className is as a className of o. It assumes that
-         * class names are separated by spaces and all other characters will be
-         * counted as part of class names.
-         *
-         * @param HTMLElement o
-         * @param string className
-         * @return boolean
-         */
-	has : function (o, className) {
-	    return RegExp("(?:^| )" + className + "(?: |$)").test (o.className);
-	},
-	/**
-         * Removes a class from o
-         *
-         * @param HTMLElement o
-         * @param string className
-         */
-	del : function (o, className) {
-	    /*
-             * Make sure the class exists, so we don't waste time doing
-             * what isn't necessary
-             */
-	    if (this.has (o, className)) {
-		var classNames = this.get (o);
-		Array.remove (classNames, className);
-		o.className = classNames.join(" ");
-	    }
-	},
-	/**
-         * Returns an array containing all classnames of an element
-         *
-         * @param HTMLElement o
-         * @return Array
-         */
-	get : function (o) {
-	    return o.className.split (/\s+/);
-	}
-    };
-    return new ClassNames();
+  } ClassNames.prototype = {
+    /**
+     * Adds a class to an object. But only if the class doesn't already
+     * exist on the object
+     *
+     * @param HTMLElement o
+     * @param string className
+     */
+    add : function (o, className) {
+      // Only add if the className isn't already added
+      if (!this.has(o, className)) {
+        // If the className property is empty, we can simply overwrite
+        // it.
+        if (!o.className) {
+            o.className = className;
+            // if it isn't empty, we have to prepend a space so that
+            // "a" and "b" becomes "a b".
+        } else {
+            o.className += " " + className;
+        }
+      }
+    },
+    /**
+     * Checks if a given className is as a className of o. It assumes that
+     * class names are separated by spaces and all other characters will be
+     * counted as part of class names.
+     *
+     * @param HTMLElement o
+     * @param string className
+     * @return boolean
+     */
+    has : function (o, className) {
+        return RegExp("(?:^| )" + className + "(?: |$)").test (o.className);
+    },
+    /**
+     * Removes a class from o
+     *
+     * @param HTMLElement o
+     * @param string className
+     */
+    del : function (o, className) {
+      /*
+       * Make sure the class exists, so we don't waste time doing
+       * what isn't necessary
+       */
+      if (this.has (o, className)) {
+        var classNames = this.get (o);
+        Array.remove (classNames, className);
+        o.className = classNames.join(" ");
+      }
+    },
+    /**
+     * Returns an array containing all classnames of an element
+     *
+     * @param HTMLElement o
+     * @return Array
+     */
+    get : function (o) {
+      return o.className.split (/\s+/);
+    }
+  };
+  return new ClassNames();
 })();
 
 Cactus.DOM.tag = (function () {
@@ -248,7 +247,8 @@ Cactus.DOM.tag = (function () {
   function append (o, contents) {
     if (typeof (contents) === "string" || typeof contents === "number") {
       o.appendChild (document.createTextNode (contents));
-    } else if (isArrayLike (contents)) {
+    }
+    else if (isArrayLike (contents)) {
       if (o.tagName.toLowerCase() === "select") {
         for (var i = 0, option; i < contents.length; i++) {
           option = contents[i];
@@ -258,12 +258,14 @@ Cactus.DOM.tag = (function () {
             o.selectedIndex = i;
           }
         }
-      } else {
+      }
+      else {
         for (var j = 0; j < contents.length; j++) {
           append (o, contents[j]);
         }
       }
-    } else if (contents) {
+    }
+    else if (contents) {
       o.appendChild (contents);
     }
   }
@@ -290,7 +292,8 @@ Cactus.DOM.tag = (function () {
     if (attributes.name && isIE) {
       o = document.createElement ("<" + name + ' name="' + attributes.name + '">');
       delete attributes.name;
-    } else {
+    }
+    else {
       o = document.createElement (name);
     }
 
@@ -316,7 +319,8 @@ Cactus.DOM.tag = (function () {
       // append to a select.
       if (q === "selected") {
         o._selected = attributes.selected;
-      } else {
+      }
+      else {
         o [q] = attributes [q];
       }
     }
@@ -780,7 +784,7 @@ markdownEditor.dialog = {
           element.label = [element.label, tag("span", { style : { color : "red" } }, "*")];
           element.attributes.className = "mandatory";
         }
-				
+
         // Create the label element.
         var label = tag("label", { htmlFor : element.attributes.id }, element.label);
 
@@ -1027,27 +1031,27 @@ markdownEditor.dialog = {
    * @param {Object} win
    */
   imceWindowLoad : function (win) {
-		win.imce.setSendTo(markdownEditor.t('Send to @app', {'@app': 'BUEditor'}), markdownEditor.dialog.imceWindowFinish);
+    win.imce.setSendTo(markdownEditor.t('Send to @app', {'@app': 'BUEditor'}), markdownEditor.dialog.imceWindowFinish);
     // TODO: Do not use jQuery here:
-		$(window).unload(function() {
+    $(window).unload(function() {
       if (MDEImceWindow && !MDEImceWindow.closed) MDEImceWindow.close();
     });
   },
-	
-	/**
-	 * Fill BUE dialog fields and close IMCE window
-	 * @param {Object} file
-	 * @param {Object} win
-	 */
-	imceWindowFinish : function (file, win) {
-	  var el = document.forms['markdowneditor-dialog-form'].elements;
-	  var val = {'text' : file.name, 'title' : file.name, 'href' : file.url}
-	  for (var i in val) {
-	    if (!el[i].value) el[i].value = val[i];
-	  }
-	  win.blur();//or close()
-	  el[el.length-1].focus();//focus on last element.
-	},
+
+  /**
+   * Fill BUE dialog fields and close IMCE window
+   * @param {Object} file
+   * @param {Object} win
+   */
+  imceWindowFinish : function (file, win) {
+    var el = document.forms['markdowneditor-dialog-form'].elements;
+    var val = {'text' : file.name, 'title' : file.name, 'href' : file.url}
+    for (var i in val) {
+      if (!el[i].value) el[i].value = val[i];
+    }
+    win.blur();//or close()
+    el[el.length-1].focus();//focus on last element.
+  },
 
   /**
    * Gives focus to the first form element in the dialog.
@@ -2240,7 +2244,7 @@ markdownEditor.strongEmphasis = function () {
   }
   // Otherwise asterisks are added around the selection.
   else {
-		markdownEditor.selection.replace(/^\**([\s\S]+?)\**$/, "**$1**");
+    markdownEditor.selection.replace(/^\**([\s\S]+?)\**$/, "**$1**");
   }
 };
 
@@ -3770,5 +3774,3 @@ markdownEditor.references = (function () {
 
   return new References();
 })();
-
-

@@ -12,11 +12,11 @@ steps:
 3. Install the module as you would any other.
 
 4. Customize the editor and set up what roles may use it:
-   admin/settings/bueditor
- 
-You can customize the editor, use other icons or captions if you like. 
+   admin/config/content/bueditor
+
+You can customize the editor, use other icons or captions if you like.
 See the BUEditor readme file for a comprehensive guide to how you can
-customize the Markdown Editor button bar. 
+customize the Markdown Editor button bar.
 
 +-------------------------------------------------------------------------+
 | ############################## WARNING ################################ |
@@ -25,14 +25,14 @@ customize the Markdown Editor button bar.
 | you have uninstalled Markdown Editor you can restore your buttons using |
 | the CSV file you saved.                                                 |
 | How this is done is explained in the BUEditor readme file.              |
-+-------------------------------------------------------------------------+ 
- 
++-------------------------------------------------------------------------+
+
 To uninstall:
-   
+
 1. Uncheck the module on the modules page
    admin/build/modules
    to disable it
-   
+
 2. Go to
    admin/build/modules/uninstall
    to uninstall the module. UNINSTALLING MARKDOWN EDITOR WILL REMOVE
