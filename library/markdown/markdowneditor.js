@@ -280,22 +280,12 @@ Cactus.DOM.tag = (function () {
    *         Array<HTMLElement>: all elements are appended.
    */
   function tag (name, attributes, contents) {
-    var isIE = false /*@cc_on || true @*/;
-
     if (!attributes) {
       attributes = {};
     }
 
-    // Due to an IE bug the  name attribute won't be set unless we
-    // make this ugly hack.
     var o;
-    if (attributes.name && isIE) {
-      o = document.createElement ("<" + name + ' name="' + attributes.name + '">');
-      delete attributes.name;
-    }
-    else {
-      o = document.createElement (name);
-    }
+    o = document.createElement (name);
 
     if (contents === null || contents === undefined) {
       contents = [];
