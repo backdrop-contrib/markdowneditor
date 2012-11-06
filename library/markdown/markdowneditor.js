@@ -368,14 +368,6 @@ markdownEditor.development = true;
 markdownEditor.settings = {};
 
 /**
- * @return
- *   Whether the IMCE module is enabled.
- */
-markdownEditor.settings.isIMCEEnabled = function () {
-  return typeof markdownEditor.settings.IMCEPath !== 'undefined';
-};
-
-/**
  * Loads the style sheet for the editor dialog.
  * It is only loaded once, and is called by the various buttons that use dialogs.
  */
@@ -409,12 +401,6 @@ markdownEditor.settings.addStyleSheet = (function () {
   return function () {
     if (!added) {
       addCSS(markdownEditor.settings.cssPath);
-
-      // Add the IE stylesheet in IE.
-      if (markdownEditor.extras.browser.ie) {
-        addCSS(markdownEditor.settings.cssPath.replace(/\.css$/, "-ie.css"));
-      }
-
       added = true;
     }
   };
@@ -469,13 +455,6 @@ markdownEditor.extras = {
     return foundElements;
   }
 
-};
-
-/**
- * Browser sniffer.
- */
-markdownEditor.extras.browser = {
-  ie : /*@cc_on !@*/ false
 };
 
 markdownEditor.extras.string = {
@@ -746,6 +725,8 @@ markdownEditor.dialog = {
         // is specified already.
         element.attributes.id = element.attributes.id || "dialog_element_" + i;
 
+        element.attributes.className = element.attributes.className || "form-" + element.attributes.type;
+
         // Add the ID as the name, if no name is specified.
         element.attributes.name = element.attributes.name || element.attributes.id;
 
@@ -838,89 +819,13 @@ markdownEditor.dialog = {
     var button = tag("input", {
       type : "button",
       value : title,
-      className : "markdowneditor-dialog-submit",
+      className : "markdowneditor-dialog-submit form-submit",
       onclick : onclick.wait(0).returning(false)
     });
 
     form.appendChild(button);
 
     return button;
-  },
-
-  /**
-   * Adds a cancel button that closes the dialog when clicked.
-   *
-   * @param form
-   *   The form that the button should be added to.
-   * @param title
-   *   An optional localized title for the button. Defaults to t("Cancel").
-   * @param prepend
-   *   Whether the button should be prepended to the dialog contents, if
-   *   false, or if the argument is omitted the button is appended.
-   *   Defaults to false.
-   * @param confirmation
-   *   Whether the user should be prompted to confirm the action.
-   *   Defaults to false.
-   * @return
-   *   The button that was added.
-   */
-  addCancelButton : function (form, title, prepend, confirmation) {
-    var tag = Cactus.DOM.tag;
-    var t = markdownEditor.t;
-    prepend = !!prepend;
-    confirmation = !!confirmation;
-    title = title || t("Cancel");
-
-    // Append or prepend the button and set the onclick handler.
-    var button = tag("input", {
-      type : "button",
-      value : title,
-      className : "markdowneditor-dialog-cancel",
-      onclick : function () {
-        // Close the dialog  if no confirmation is needed  or the user
-        // confirms.
-        if (!confirmation || confirm(t("Any changes will be lost. Are you sure you want to cancel?"))) {
-          markdownEditor.dialog.close();
-        }
-        return false;
-      }
-    });
-
-    // Add the button to the start of the dialog if prepend is set.
-    if (prepend) {
-      form.insertBefore(button, form.firstChild);
-    }
-    // Otherwise append to the end of the dialog.
-    else {
-      form.appendChild(button);
-    }
-
-    return button;
-  },
-
-  /**
-   * Adds a help button to the dialog, the button closes the dialog and opens
-   * the help dialog and scrolls to the appropriate position.
-   *
-   * @param form
-   *   The dialog form to add the button to.
-   * @param helpSection
-   *   The ID in the dialog to set as the anchor and scroll to.
-   *   This argument is unused at the moment, but may be added later on.
-   */
-  addHelpButton : function (form, helpSection) {
-    var tag = Cactus.DOM.tag;
-    var t = markdownEditor.t;
-
-    // Create the button.
-    var button = tag("input", {
-      type : "button",
-      value : t("?"),
-      className : "markdowneditor-dialog-help-button",
-      onclick : markdownEditor.help
-    });
-
-    form.appendChild(button);
   },
 
   /**
@@ -996,34 +901,25 @@ markdownEditor.dialog = {
    *   The element to put the result from the IMCE window in.
    */
   addIMCELink : function (parent, resultElement) {
-    // Do nothing if IMCE is disabled.
-    if (!markdownEditor.settings.isIMCEEnabled()) return;
-
+    //require URL set.
+    if (!BUE.imce.url) {
+      return;
+    }
     var tag = Cactus.DOM.tag;
     var t = markdownEditor.t;
-    var windowName = "icmeBrowse";
-
-    // Create a function that only opens the IMCE window if the target
-    // of the event is the IMCE link.
-    var triggerFunction = function (e) {
-      e = e || window.event;
-      var target = e.target || e.srcElement;
-      if (target !== this) return false;
-
-      // Open the window.
-      MDEImceWindow = window.open(markdownEditor.settings.IMCEPath, "icmeBrowse", "width=640, height=480");
-      MDEImceWindow['imceOnLoad'] = markdownEditor.dialog.imceWindowLoad;//set a function to be executed when imce loads.
-      return false;
+    var triggerFunction = function () {
+      BUE.imce.open(resultElement);
     };
-
     // Append the button and assign its onclick handler that opens the
     // IMCE browse window.
-    parent.appendChild(tag("div", { className : "imce-button-wrapper" }, tag("input", {
+    parent.appendChild(tag("input", {
       type : "button",
-      className : "imce-button",
-      value : t("Browse..."),
+      id : "bue-imce-button",
+      className : "imce-button form-submit",
+      name : "bue_imce_button",
+      value : t("Browse"),
       onclick : triggerFunction
-    })));
+    }));
   },
 
   /**
@@ -1080,13 +976,7 @@ markdownEditor.dialog = {
    */
   clearWidth : function () {
     var dialog = document.getElementById("bue-dialog");
-
-    if (markdownEditor.extras.browser.ie) {
-      dialog.style.width = "";
-    }
-    else {
-      dialog.style.maxWidth = "";
-    }
+    dialog.style.maxWidth = "";
   },
 
   /**
@@ -1094,15 +984,7 @@ markdownEditor.dialog = {
    */
   setWidth : function () {
     var dialog = document.getElementById("bue-dialog");
-    var isIE = /*@cc_on !@*/ false;
-
-    // maxWidth is width in IE.
-    if (markdownEditor.extras.browser.ie) {
-      dialog.style.width = "600px";
-    }
-    else {
-      dialog.style.maxWidth = "600px";
-    }
+    dialog.style.maxWidth = "600px";
   }
 };
 
@@ -1603,9 +1485,7 @@ markdownEditor.link = function () {
   var submitFunction = markdownEditor.link._process.bind(null, form, "Links");
   mDialog.setOnsubmit(form, submitFunction);
   mDialog.addIMCELink(form.elements.href.parentNode, form.elements.href);
-  mDialog.addCancelButton(form);
   mDialog.addSubmitButton(form, submitFunction);
-  mDialog.addHelpButton(form, "link");
 
   // Open the dialog and add display the form.
   mDialog.open(t("Insert link"), "link");
@@ -1689,9 +1569,7 @@ markdownEditor.image = function () {
   var mDialog = markdownEditor.dialog;
   mDialog.setOnsubmit(form, submitFunction);
   mDialog.addIMCELink(form.elements.href.parentNode, form.elements.href);
-  mDialog.addCancelButton(form);
   mDialog.addSubmitButton(form, submitFunction);
-  mDialog.addHelpButton(form, "image");
 
   // Open the dialog and display the form.
   mDialog.open(t("Insert image"), "image");
@@ -1765,7 +1643,7 @@ markdownEditor.footnote = function () {
   // Create the dialog form.
   var form = createForm(
     { label : t("Reference"), mandatory : true, attributes : { name : "reference", value : referenceValue } },
-    { label : t("Text"), tagName : "textarea", attributes : { name : "text", value : textValue } }
+    { label : t("Text"), tagName : "textarea", attributes : { name : "text", value : textValue, className : 'form-textarea' } }
   );
 
   // Create the onsubmit function
@@ -1773,9 +1651,7 @@ markdownEditor.footnote = function () {
 
   // Add buttons.
   mDialog.setOnsubmit(form, submitFunction);
-  mDialog.addCancelButton(form);
   mDialog.addSubmitButton(form, submitFunction);
-  mDialog.addHelpButton(form, "footnote");
 
   // Open the dialog and display the form.
   mDialog.open(t("Insert footnote"), "footnote");
@@ -1840,13 +1716,11 @@ markdownEditor.abbreviation = function () {
   );
 
   // Create the submit button and  have it assign an onclick handler
-  // that processes the form submission. Also add a cancel button.
+  // that processes the form submission.
   var submitFunction = markdownEditor.abbreviation._process.bind(null, form, "Abbreviations");
   var mDialog = markdownEditor.dialog;
   mDialog.setOnsubmit(form, submitFunction);
-  mDialog.addCancelButton(form);
   mDialog.addSubmitButton(form, submitFunction);
-  mDialog.addHelpButton(form, "abbreviation");
 
   // Open the dialog and display the form.
   mDialog.open(t("Insert abbreviation"), "abbreviation");
@@ -2127,17 +2001,14 @@ markdownEditor.header = function () {
     { label : t("ID"), attributes : { name : "id", value : idValue } }
   );
 
-  // Create a submit button  and add an onclick/onsubmit handler. Also
-  // create a cancel button.
+  // Create a submit button  and add an onclick/onsubmit handler.
   var mDialog = markdownEditor.dialog;
   var submitFunction = markdownEditor.header._callback.bind(null, form);
 
   mDialog.setOnsubmit(form, submitFunction);
   // The event is passed on through the submit button to onsubmit.
-  mDialog.addCancelButton(form);
   var submitButton = mDialog.addSubmitButton(form, function () {});
   submitButton.onmousedown = submitFunction;
-  mDialog.addHelpButton(form, "header");
 
   // Create the dialog and display the form.
   mDialog.open(t("Insert header"), "header");
@@ -2332,20 +2203,6 @@ markdownEditor.lineBreak = function () {
 
 
 /*******************************************************************************
- * HELP
- ******************************************************************************/
-
-/**
- * Displays help for using the buttons.
- *
- * each button has a section and an ID so it can be linked to.
- */
-markdownEditor.help = function () {
-  window.open(markdownEditor.settings.helpPath);
-};
-
-
-/*******************************************************************************
  * TABLE
  ******************************************************************************/
 
@@ -2393,7 +2250,8 @@ markdownEditor.Table = (function() {
     createHeaderCell : function () {
       return tag("td", null, tag("input", {
         type : "text",
-        name : "header"
+        name : "header",
+        className : "form-text"
       }));
     },
 
@@ -2405,8 +2263,8 @@ markdownEditor.Table = (function() {
      *   A TD with three radio buttons along with their labels.
      */
     createAlignmentCell : function () {
-      return tag("td", { className : "alignment-cell" }, tag("select", null, [
-        tag("option", { value : "none", selected : true }, t("")),
+      return tag("td", { className : "alignment-cell" }, tag("select", { className : "form-select" }, [
+        tag("option", { value : "none", selected : true }, t("- None -")),
         tag("option", { value : "left" }, t("Left")),
         tag("option", { value : "center" }, t("Center")),
         tag("option", { value : "right" }, t("Right"))
@@ -2422,7 +2280,8 @@ markdownEditor.Table = (function() {
     createContentCell : function () {
       return tag("td", null, [
         tag("input", {
-          type : "text"
+          type : "text",
+          className : "form-text"
         })
       ]);
     },
@@ -2688,7 +2547,9 @@ markdownEditor.Table = (function() {
       // Set the table and form to instance variables.
       this.table = tag("table", null, this.tbody);
       this.fieldset = tag("fieldset", null, this.table);
-      this.form = tag("form", null, this.fieldset);
+      this.form = tag("form", {
+        id : "markdowneditor-dialog-form"
+      }, this.fieldset);
       this.setFirstAlignmentColumnBehavior();
     },
 
@@ -2932,10 +2793,8 @@ markdownEditor.Table = (function() {
       var mDialog = markdownEditor.dialog;
 
       // Add buttons.
-      mDialog.addCancelButton(this.form);
       mDialog.setOnsubmit(this.form, this.submitHandler.bind(this));
       mDialog.addSubmitButton(this.form, this.submitHandler.bind(this));
-      mDialog.addHelpButton(this.form, "table");
 
       // Open and setup the dialog.
       mDialog.open(t("Insert table"), "table");
@@ -2991,10 +2850,11 @@ markdownEditor.DefinitionList = (function () {
       this.fieldset = tag("fieldset");
 
       this.form = tag("form", {
+        id : "markdowneditor-dialog-form",
         onsubmit : this.process.bind(this).wait(0).returning(false)
       }, this.fieldset);
 
-      this.contentContainer = tag("div", {
+      this.contentContainer = tag("table", {
         className : "content-container"
       });
 
@@ -3009,18 +2869,16 @@ markdownEditor.DefinitionList = (function () {
       this.setFirstRowBehavior();
 
       // Add buttons.
-      mDialog.addCancelButton(this.form);
       mDialog.addSubmitButton(this.form, this.process.bind(this));
-      mDialog.addHelpButton(this.form, "definition-list");
 
     },
 
     createHeaderRow : function () {
-      return tag("div", {
+      return tag("tr", {
         className : "header-row"
-      }, [tag("div", {
+      }, [tag("th", {
         className : "header-cell"
-      }, t("Term")), tag("div", {
+      }, t("Term")), tag("th", {
         className : "header-cell"
       }, t("Definition"))]);
     },
@@ -3034,7 +2892,7 @@ markdownEditor.DefinitionList = (function () {
      *   The created div.
      */
     createContentRow : function () {
-      var row = tag("div", {
+      var row = tag("tr", {
         className : "content-row"
       });
       // Append the different parts of the row.
@@ -3057,12 +2915,12 @@ markdownEditor.DefinitionList = (function () {
       var self = this;
       // Create  a div  with an  input, the  input's default  value is
       // cleared when it gains focus.
-      return tag("div", {
+      return tag("td", {
         className : "title-cell"
       }, tag("input", {
         value : this.titleCellDefaultValue,
         type : "text",
-        className : "title-cell-input",
+        className : "title-cell-input form-text",
         onfocus : function () {
           if (this.value === self.titleCellDefaultValue) {
             this.value = "";
@@ -3082,10 +2940,11 @@ markdownEditor.DefinitionList = (function () {
       var self = this;
       // Create a div with a textarea, the textarea's default value is
       // cleared when the element gains focus.
-      return tag("div", {
+      return tag("td", {
         className : "description-cell"
       }, tag("textarea", {
         value : this.descriptionCellDefaultValue,
+        className : 'form-textarea',
         onfocus : function () {
           if (this.value === self.descriptionCellDefaultValue) {
             this.value = "";
@@ -3101,7 +2960,7 @@ markdownEditor.DefinitionList = (function () {
      *   A new element containing buttons for adding and removing rows.
      */
     createModificationCell : function (row) {
-      return tag("div", {
+      return tag("td", {
         className : "modification"
       }, [
         this.createPrependRowButton(row),
@@ -3122,13 +2981,11 @@ markdownEditor.DefinitionList = (function () {
      */
     createRemoveRowButton : function (row, title) {
       title = title || t("Remove this row.");
-      return tag("input", {
-        type : "button",
+      return tag("button", {
         title : title,
-        value : "-",
         className : "remove-row-button",
         onclick : this.removeRow.bind(this, row).wait(0).returning(false)
-      });
+      }, "-");
     },
 
     /**
@@ -3144,14 +3001,13 @@ markdownEditor.DefinitionList = (function () {
      *   The created HTMLButtonElement.
      */
     createAddRowButton : function (row, title, append) {
-      title = title || t("Add a row below this row.");
-      return tag("input", {
-        type : "button",
+      title = title || t("Insert a row below this row.");
+      var addButton = tag("button", {
         title : title,
-        className : "add-row-button",
-        value : "+",
-        onclick : this.addRow.bind(this, row, append).wait(0).returning(false)
-      });
+        className : "add-row-button"
+      }, "+");
+      addButton.onclick = this.addRow.bind(this, row, append).wait(0).returning(false);
+      return addButton;
     },
 
     /**
@@ -3165,14 +3021,13 @@ markdownEditor.DefinitionList = (function () {
      *   The created button.
      */
     createPrependRowButton : function (row, title) {
-      title = title || t("Add a row above this row.");
-      return tag("input", {
-        type : "button",
-        className : "prepend-row-button",
+      title = title || t("Insert a row above this row.");
+      var prependButton = tag("button", {
         title : title,
-        onclick : this.prependRow.bind(this, row).wait(0).returning(false),
-        value : "+"
-      });
+        className : "prepend-row-button"
+      }, "+");
+      prependButton.onclick = this.prependRow.bind(this, row).wait(0).returning(false);
+      return prependButton;
     },
 
     /**
