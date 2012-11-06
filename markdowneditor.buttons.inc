@@ -15,10 +15,6 @@
  *   NodeOne - www.nodeone.se
  */
 
-$ajax_markup_exist = module_exists('ajax_markup') ? 'ajax_markup_exist' : NULL;
-$imce_url = module_exists('imce') ? url('imce/browse') : NULL;
-$js_imceURL = $imce_url ? "markdownEditor.settings.IMCEPath = '$imce_url';" : '';
-
 // Define buttons
 //
 // 0: eid
@@ -36,7 +32,7 @@ $i = 0;
 $mde_buttons[$i++] = array(
   $eid,
   t("Make selected text into a header"),
-  "js: $js_imceURL markdownEditor.header();",
+  "js: markdownEditor.header();",
   "md-make-header.gif",
   "H",
   -10,
@@ -108,7 +104,7 @@ $mde_buttons[$i++] = array(
 $mde_buttons[$i++] = array(
   $eid,
   t("Insert a definition list"),
-  "js: $js_imceURL new markdownEditor.DefinitionList();",
+  "js: new markdownEditor.DefinitionList();",
   "md-add-dl.gif",
   "",
   -2,
@@ -117,7 +113,7 @@ $mde_buttons[$i++] = array(
 $mde_buttons[$i++] = array(
   $eid,
   t("Insert a table"),
-  "js: $js_imceURL new markdownEditor.Table();",
+  "js: new markdownEditor.Table();",
   "md-add-table.gif",
   "T",
   -1,
@@ -126,7 +122,7 @@ $mde_buttons[$i++] = array(
 $mde_buttons[$i++] = array(
   $eid,
   ("Insert an abbreviation (word or acronym with definition)"),
-  "js: $js_imceURL markdownEditor.abbreviation();",
+  "js: markdownEditor.abbreviation();",
   "md-add-abbreviation.gif",
   "",
   0,
@@ -135,7 +131,7 @@ $mde_buttons[$i++] = array(
 $mde_buttons[$i++] = array(
   $eid,
   t("Insert a footnote"),
-  "js: $js_imceURL markdownEditor.footnote();",
+  "js: markdownEditor.footnote();",
   "md-add-footnote.gif",
   "F",
   1,
@@ -144,7 +140,7 @@ $mde_buttons[$i++] = array(
 $mde_buttons[$i++] = array(
   $eid,
   t("Make text into an autolink (turns URLs in links, turns words into section identifiers for navigating the document)"),
-  "js: $js_imceURL markdownEditor.autoLink();",
+  "js: markdownEditor.autoLink();",
   "md-add-autolink.gif",
   "A",
   2,
@@ -153,7 +149,7 @@ $mde_buttons[$i++] = array(
 $mde_buttons[$i++] = array(
   $eid,
   t("Make text into a link (turns text into a link with more options)"),
-  "js: $js_imceURL markdownEditor.link();",
+  "js: markdownEditor.link();",
   "md-make-link.gif",
   "L",
   3,
@@ -162,7 +158,7 @@ $mde_buttons[$i++] = array(
 $mde_buttons[$i++] = array(
   $eid,
   t("Insert an image"),
-  "js: $js_imceURL markdownEditor.image();",
+  "js: markdownEditor.image();",
   "md-add-picture.gif",
   "M",
   4,
