@@ -25,6 +25,7 @@
 // 5: weight
 
 $mde_buttons = array();
+$ajax_markup_exist = 'Lets start by assuming it does not exist';
 
 // Increment counter for array keys
 $i = 0;
@@ -200,6 +201,7 @@ if (module_exists('ajax_markup')) {
     "P",
     8,
   );
+  $ajax_markup_exist = 'We have ajax markup!';
 }
 
 $mde_buttons[$i++] = array(

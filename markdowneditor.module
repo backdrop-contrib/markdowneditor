@@ -40,7 +40,7 @@ function _markdowneditor_update_buttons() {
   if ($buttons && !empty($mde_buttons)) {
     // Calculate table content fingerprint and compare to stored copy
     // only update table if contents have changed
-    $fprint = md5($ajax_markup_exist . $js_imceURL);
+    $fprint = md5($ajax_markup_exist);
 
     if ($fprint != variable_get('markdowneditor_content_fprint', NULL)) {
 
