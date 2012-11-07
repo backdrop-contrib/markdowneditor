@@ -819,6 +819,57 @@ markdownEditor.dialog = {
   },
 
   /**
+   * Adds a cancel button that closes the dialog when clicked.
+   *
+   * @param form
+   *   The form that the button should be added to.
+   * @param title
+   *   An optional localized title for the button. Defaults to t("Cancel").
+   * @param prepend
+   *   Whether the button should be prepended to the dialog contents, if
+   *   false, or if the argument is omitted the button is appended.
+   *   Defaults to false.
+   * @param confirmation
+   *   Whether the user should be prompted to confirm the action.
+   *   Defaults to false.
+   * @return
+   *   The button that was added.
+   */
+  addCancelButton : function (form, title, prepend, confirmation) {
+    var tag = Cactus.DOM.tag;
+    var t = markdownEditor.t;
+    prepend = !!prepend;
+    confirmation = !!confirmation;
+    title = title || t("Cancel");
+
+    // Append or prepend the button and set the onclick handler.
+    var button = tag("input", {
+      type : "button",
+      value : title,
+      className : "markdowneditor-dialog-cancel form-submit",
+      onclick : function () {
+        // Close the dialog  if no confirmation is needed  or the user
+        // confirms.
+        if (!confirmation || confirm(t("Any changes will be lost. Are you sure you want to cancel?"))) {
+          markdownEditor.dialog.close();
+        }
+        return false;
+      }
+    });
+
+    // Add the button to the start of the dialog if prepend is set.
+    if (prepend) {
+      form.insertBefore(button, form.firstChild);
+    }
+    // Otherwise append to the end of the dialog.
+    else {
+      form.appendChild(button);
+    }
+
+    return button;
+  },
+
+  /**
    * Gets the title of the dialog.
    *
    * @return
@@ -1476,6 +1527,7 @@ markdownEditor.link = function () {
   mDialog.setOnsubmit(form, submitFunction);
   mDialog.addIMCELink(form.elements.href.parentNode, form.elements.href);
   mDialog.addSubmitButton(form, submitFunction);
+  mDialog.addCancelButton(form);
 
   // Open the dialog and add display the form.
   mDialog.open(t("Insert link"), "link");
@@ -1562,6 +1614,7 @@ markdownEditor.image = function () {
   mDialog.setOnsubmit(form, submitFunction);
   mDialog.addIMCELink(form.elements.href.parentNode, form.elements.href);
   mDialog.addSubmitButton(form, submitFunction);
+  mDialog.addCancelButton(form);
 
   // Open the dialog and display the form.
   mDialog.open(t("Insert image"), "image");
@@ -1652,6 +1705,7 @@ markdownEditor.footnote = function () {
   // Add buttons.
   mDialog.setOnsubmit(form, submitFunction);
   mDialog.addSubmitButton(form, submitFunction);
+  mDialog.addCancelButton(form);
 
   // Open the dialog and display the form.
   mDialog.open(t("Insert footnote"), "footnote");
@@ -1716,11 +1770,12 @@ markdownEditor.abbreviation = function () {
   );
 
   // Create the submit button and  have it assign an onclick handler
-  // that processes the form submission.
+  // that processes the form submission. Also add a cancel button.
   var submitFunction = markdownEditor.abbreviation._process.bind(null, form, "Abbreviations");
   var mDialog = markdownEditor.dialog;
   mDialog.setOnsubmit(form, submitFunction);
   mDialog.addSubmitButton(form, submitFunction);
+  mDialog.addCancelButton(form);
 
   // Open the dialog and display the form.
   mDialog.open(t("Insert abbreviation"), "abbreviation");
@@ -2001,7 +2056,8 @@ markdownEditor.header = function () {
     { label : t("ID"), attributes : { name : "id", value : idValue } }
   );
 
-  // Create a submit button  and add an onclick/onsubmit handler.
+  // Create a submit button  and add an onclick/onsubmit handler. Also
+  // create a cancel button.
   var mDialog = markdownEditor.dialog;
   var submitFunction = markdownEditor.header._callback.bind(null, form);
 
@@ -2009,6 +2065,7 @@ markdownEditor.header = function () {
   // The event is passed on through the submit button to onsubmit.
   var submitButton = mDialog.addSubmitButton(form, function () {});
   submitButton.onmousedown = submitFunction;
+  mDialog.addCancelButton(form);
 
   // Create the dialog and display the form.
   mDialog.open(t("Insert header"), "header");
@@ -2795,6 +2852,7 @@ markdownEditor.Table = (function() {
       // Add buttons.
       mDialog.setOnsubmit(this.form, this.submitHandler.bind(this));
       mDialog.addSubmitButton(this.form, this.submitHandler.bind(this));
+      mDialog.addCancelButton(this.form);
 
       // Open and setup the dialog.
       mDialog.open(t("Insert table"), "table");
@@ -2870,6 +2928,7 @@ markdownEditor.DefinitionList = (function () {
 
       // Add buttons.
       mDialog.addSubmitButton(this.form, this.process.bind(this));
+      mDialog.addCancelButton(this.form);
 
     },
 
