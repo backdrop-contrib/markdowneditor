@@ -63,7 +63,11 @@ function _markdowneditor_insert_latest($name = 'default') {
   $path = drupal_get_path('module', 'markdowneditor');
 
   // Set up library paths
-  $library_paths = "$path/library/markdown/markdowneditor.js\n$path/library/markdown/markdowneditor.css\n%BUEDITOR/library/bue.min.default.js";
+  $library_paths = '';
+  $library_paths .= "$path/library/markdown/markdowneditor.css\n";
+  $library_paths .= "$path/library/markdown/markdowneditor_popup.css\n";
+  $library_paths .= "%BUEDITOR/library/bue.min.default.js\n";
+  $library_paths .= "$path/library/markdown/markdowneditor.js";
 
   // Add editor
   $eid = db_insert('bueditor_editors')

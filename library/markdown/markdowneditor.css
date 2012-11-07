@@ -1,17 +1,19 @@
 /**
  * @file
- * CSS for MarkdownEditor.
+ * CSS for Markdown editor.
  */
+
 
 /* Scrollbars to allow content that overflows dialog */
 .bue-popup-body {
   overflow: auto;
+  max-width: 600px;
+  max-height: 400px;
   padding-bottom: 10px;
 }
 
-#markdowneditor-dialog-form {
-  max-width: 600px;
-  max-height: 400px;
+#markdowneditor-dialog-form fieldset {
+  border: none;
 }
 
 #markdowneditor-dialog-form .form-text,
@@ -26,6 +28,12 @@
   text-transform: none;
   background: transparent;
   border: none;
+}
+
+#markdowneditor-dialog-form .markdowneditor-dialog-submit,
+#markdowneditor-dialog-form .markdowneditor-dialog-cancel {
+  float: right;
+  margin-bottom: 0;
 }
 
 /* Fix for Seven admin theme. */
@@ -66,4 +74,8 @@
 
 #markdowneditor-dialog-table .column-modification-cell.first .prepend-column-button {
   visibility: visible;
+}
+
+#markdowneditor-dialog-table .row-modification-cell {
+  white-space: nowrap;
 }
