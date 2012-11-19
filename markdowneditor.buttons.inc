@@ -15,6 +15,11 @@
  *   NodeOne - www.nodeone.se
  */
 
+// Only load this file if $eid is set.
+if (!isset($eid)) {
+  return;
+}
+
 // Define buttons
 //
 // 0: eid
