@@ -27,11 +27,13 @@ function _markdowneditor_form_system_modules_submit($form, &$form_stat) {
  * Update button definitions when moodules MDE depends on are enabled/disabled
  */
 function _markdowneditor_update_buttons() {
+
+  $config = config('markdowneditor.settings');
   // Load buttons
-  $buttons = variable_get('markdowneditor_buttons', FALSE);
+  $buttons = $config->get('buttons');
 
   // Get editor's eid
-  $eid = variable_get('markdowneditor_eid');
+  $eid = $config->get('eid');
 
   // Include default button definitions
   module_load_include('inc', 'markdowneditor', 'markdowneditor.buttons');
@@ -42,10 +44,10 @@ function _markdowneditor_update_buttons() {
     // only update table if contents have changed
     $fprint = md5($ajax_markup_exist);
 
-    if ($fprint != variable_get('markdowneditor_content_fprint', NULL)) {
+    if ($fprint != $config->get('content_fprint')) {
 
       // Store new fingerprint
-      variable_set('markdowneditor_content_fprint', $fprint);
+      $config->set('content_fprint', $fprint);
 
       // Update buttons
       foreach ($buttons as $mde_bkey => $bid) {

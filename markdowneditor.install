@@ -21,7 +21,7 @@
 function markdowneditor_install() {
   if (_markdowneditor_insert_latest()) {
     $t = get_t();
-    drupal_set_message($t('Markdown Editor for BUEditor successfully installed. Go to !buesettings to set up "Role-editor assignments" to select the roles that may use it.', array('!buesettings' => l('Administration > Configuration > BUEditor', 'admin/config/content/bueditor'))));
+    backdrop_set_message($t('Markdown Editor for BUEditor successfully installed. Go to !buesettings to set up "Role-editor assignments" to select the roles that may use it.', array('!buesettings' => l('Administration > Configuration > BUEditor', 'admin/config/content/bueditor'))));
   }
 }
 
@@ -29,7 +29,7 @@ function markdowneditor_install() {
  * Implements hook_uninstall().
  */
 function markdowneditor_uninstall() {
-  $eid = variable_get('markdowneditor_eid', FALSE);
+  $eid = config_get('markdowneditor.settings', 'eid');
 
   if ($eid) {
     db_delete('bueditor_buttons')
@@ -46,11 +46,6 @@ function markdowneditor_uninstall() {
   cache_clear_all('*', 'cache_menu', TRUE);
   cache_clear_all('*', 'cache_page', TRUE);
 
-  // Clear variables
-  db_delete('variable')
-    ->condition('name', 'markdowneditor_%', 'LIKE')
-    ->execute();
-  cache_clear_all('variables', 'cache');
 }
 
 /**
@@ -60,7 +55,7 @@ function _markdowneditor_insert_latest($name = 'default') {
 
   // Set up variables
   $name = 'Markdowneditor';
-  $path = drupal_get_path('module', 'markdowneditor');
+  $path = backdrop_get_path('module', 'markdowneditor');
 
   // Set up library paths
   $library_paths = '';
@@ -81,7 +76,7 @@ function _markdowneditor_insert_latest($name = 'default') {
     ->execute();
 
   // Include default button definitions
-  require_once DRUPAL_ROOT . '/' . $path . '/markdowneditor.buttons.inc';
+  require_once BACKDROP_ROOT . '/' . $path . '/markdowneditor.buttons.inc';
 
   // We store a local copy of the bids so we can update them later as we
   // then know the button ids (bid)
@@ -105,25 +100,49 @@ function _markdowneditor_insert_latest($name = 'default') {
     $buttons[$mde_bkey] = $bid;
   }
 
+  $config = config('markdowneditor.settings');
   // Store bids for updates later
-  variable_set('markdowneditor_buttons', $buttons);
+  $config->set('buttons', $buttons);
 
   // Store the eid for uninstallation later
-  variable_set('markdowneditor_eid', $eid);
+  $config->set('eid', $eid);
 
   // Calculate and store a hash of configuration values so we can detect changes later on
   $fprint = md5($ajax_markup_exist);
-  variable_set('markdowneditor_content_fprint', $fprint);
+  $config->set('content_fprint', $fprint);
+
+  $config->save();
 
   return $eid;
 }
 
 /**
- * Update icons file extension from gif to png.
+ * @defgroup updates-7.x-to-1.x Updates from 7.x to 1.x
+ * @{
+ * Update functions from Drupal 7.x to Backdrop CMS 1.x.
  */
-function markdowneditor_update_7100() {
-  db_update('bueditor_buttons')
-    ->condition('icon', db_like('md-') . '%', 'LIKE')
-    ->expression('icon', 'replace(icon, :old_ext, :new_ext)', array(':old_ext' => '.gif', ':new_ext' => '.png'))
-    ->execute();
+
+/**
+ * Move markdowneditor settings from variables to config.
+ */
+function markdowneditor_update_1000() {
+  // Migrate variables to config.
+  $config = config('markdowneditor.settings');
+  $config->set('buttons', update_variable_get('markdowneditor_buttons', FALSE));
+  $config->set('eid', update_variable_get('markdowneditor_eid', FALSE));
+  $config->set('content_fprint', update_variable_get('markdowneditor_content_fprint', NULL));
+
+  $config->save();
+
+  // Delete variables.
+  update_variable_del('markdowneditor_buttons');
+  update_variable_del('markdowneditor_eid');
+  update_variable_del('markdowneditor_content_fprint');
+
 }
+
+/**
+ * @} End of "defgroup updates-7.x-to-1.x"
+ * The next series of updates should start at 2000.
+ */
+
