@@ -5,3 +5,5 @@ package = Content authoring
 dependencies[] = bueditor
 recommends[] = ajax_markup
 recommends[] = markdown
+
+version = 1.x-1.x
