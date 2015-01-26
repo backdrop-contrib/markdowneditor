@@ -1,7 +1,26 @@
-CAPTCHA
-========
+Markdown Editor
+===============
 
-A CAPTCHA is a challenge-response test most often placed within web forms to determine whether the user is human. The purpose of CAPTCHA is to block form submissions by spambots, which are automated scripts that post spam content everywhere they can. The CAPTCHA module provides this feature to virtually any user facing web form on a Backdrop site.
+Markdown editor is a plug-in editor for BUEditor and provides a toolbar and dialogs for creating and editing Markdown and Markdown Extra markup.
+
+Supported Markdown tags
+-----------------------
+
+* Header
+* Italics
+* Bold
+* Code (inline and block)
+* Quote
+* Ordered list
+* Unordered list
+* Definition list
+* Table
+* Abbreviation/acronym
+* Footnote
+* Link
+* Image
+* Paragraph break
+* Horizontal rule
 
 INSTALLATION
 ------------
@@ -9,10 +28,18 @@ INSTALLATION
 - Install this module using the official Backdrop CMS instructions at
   https://backdropcms.org/guide/modules
 
-- Go to Configuration > People > CAPTCHA
-  (admin/config/people/captcha).
-- You can either use the default Math CAPTCHA or also enable the included Image CAPTCHA module.
-- This module allows for additional modules to extend its functionality, such as reCAPTCHA.
+- Go to Configuration > Content Authoring > BUEditor
+  (admin/config/config/content/bueditor).
+- Edit the markdown editor in BUEditor's settings.
+- In "Role-editor assignments" section select the roles that may use the Markdown editor.
+
+Dependencies
+------------
+
+* BUEditor
+* Markdown filter
+
+Ajax markup is highly recommended to get nice previews. Install it before you activate Markdown editor and it will automatically use it when setting up the editor buttons.
 
 License
 -------
@@ -30,4 +57,6 @@ Credits
 
 Ported to Backdrop by Herb v/d Dool (https://github.com/herbdool/)
 
-This module was originally written for Drupal (https://drupal.org/project/captcha). Drupal maintainers are: [wundo](https://www.drupal.org/u/wundo), [soxofaan](https://www.drupal.org/u/soxofaan), [elachlan](https://www.drupal.org/u/elechlan), [podarok](https://www.drupal.org/u/podarok), [RobLoach](https://www.drupal.org/u/robloach).
+This module was originally written for Drupal (https://drupal.org/project/markdowneditor). Drupal maintainers are: [frjo](https://www.drupal.org/u/frjo), [solipsist](https://www.drupal.org/u/solipsist).
+
+The new icons are contributed by [SthlmConnection](http://www.sthlmconnection.se/), Sweden.
