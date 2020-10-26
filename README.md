@@ -26,10 +26,9 @@ INSTALLATION
 ------------
 
 - Install this module using the official Backdrop CMS instructions at
-  https://backdropcms.org/guide/modules
+  <https://backdropcms.org/guide/modules>
 
-- Go to Configuration > Content Authoring > BUEditor
-  (admin/config/config/content/bueditor).
+- Go to Configuration > Content Authoring > BUEditor `admin/config/config/content/bueditor`.
 - Edit the markdown editor in BUEditor's settings.
 - In "Role-editor assignments" section select the roles that may use the Markdown editor.
 
@@ -50,13 +49,13 @@ complete text.
 Current Maintainers
 -------------------
 
-This module is currently seeking maintainers.
+* Alan Mels <https://github.com/alanmels>
 
 Credits
 -------
 
-Ported to Backdrop by Herb v/d Dool (https://github.com/herbdool/)
+Ported to Backdrop by Herb v/d Dool <https://github.com/herbdool/>
 
-This module was originally written for Drupal (https://drupal.org/project/markdowneditor). Drupal maintainers are: [frjo](https://www.drupal.org/u/frjo), [solipsist](https://www.drupal.org/u/solipsist).
+This module was originally written for Drupal <https://drupal.org/project/markdowneditor>. Drupal maintainers are: [frjo](https://www.drupal.org/u/frjo), [solipsist](https://www.drupal.org/u/solipsist).
 
 The new icons are contributed by [SthlmConnection](http://www.sthlmconnection.se/), Sweden.
