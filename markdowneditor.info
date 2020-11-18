@@ -1,6 +1,7 @@
 name = Markdown Editor for BUEditor
 description = Provides a toolbar for writing Markdown syntax with BUEditor.
 backdrop = 1.x
+type = module
 package = Content authoring
 dependencies[] = bueditor
 recommends[] = ajax_markup
