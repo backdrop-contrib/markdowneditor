@@ -28,7 +28,7 @@ INSTALLATION
 - Install this module using the official Backdrop CMS instructions at
   <https://backdropcms.org/guide/modules>
 
-- Go to Configuration > Content Authoring > BUEditor `admin/config/config/content/bueditor`.
+- Go to Configuration > Content Authoring > BUEditor `admin/config/content/bueditor`.
 - Edit the markdown editor in BUEditor's settings.
 - In "Role-editor assignments" section select the roles that may use the Markdown editor.
 
