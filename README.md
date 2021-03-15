@@ -35,8 +35,8 @@ INSTALLATION
 Dependencies
 ------------
 
-* BUEditor
-* Markdown filter
+* [BUEditor](https://github.com/backdrop-contrib/bueditor)
+* [Markdown filter](https://github.com/backdrop-contrib/markdown)
 
 Ajax markup is highly recommended to get nice previews. Install it before you activate Markdown editor and it will automatically use it when setting up the editor buttons.
 
