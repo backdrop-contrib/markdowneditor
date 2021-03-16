@@ -1,0 +1,173 @@
+{
+    "_config_name": "bueditor.editor.markdown",
+    "name": "Markdown",
+    "id": "markdown",
+    "pages": "node/*\r\ncomment/*",
+    "excludes": "edit-log\r\nedit-menu-description",
+    "iconpath": "modules/markdowneditor/icons",
+    "librarypath": "%BUEDITOR/library/bue.min.default.js\r\nmodules/markdowneditor/library/markdowneditor.js\r\nmodules/markdowneditor/library/markdowneditor.css\r\nmodules/markdowneditor/library/markdowneditor_popup.css",
+    "spriteon": 0,
+    "spritename": "",
+    "buttons": [
+        {
+            "title": "Make selected text into a header",
+            "content": "js:  markdownEditor.header();",
+            "icon": "md-make-header@2x.png",
+            "accesskey": "H",
+            "weight": "0",
+            "bid": 0
+        },
+        {
+            "title": "Italics: Make selected text emphasized",
+            "content": "js: markdownEditor.emphasis();",
+            "icon": "md-make-em@2x.png",
+            "accesskey": "I",
+            "weight": "1",
+            "bid": 1
+        },
+        {
+            "title": "Bold: Make selected text strong",
+            "content": "js: markdownEditor.strongEmphasis();",
+            "icon": "md-make-strong@2x.png",
+            "accesskey": "B",
+            "weight": "2",
+            "bid": 2
+        },
+        {
+            "title": "Format selected text as code",
+            "content": "js: markdownEditor.codeInline();",
+            "icon": "md-make-code@2x.png",
+            "accesskey": "",
+            "weight": "3",
+            "bid": 3
+        },
+        {
+            "title": "Format selected text as a code block",
+            "content": "js: markdownEditor.codeBlock();",
+            "icon": "md-make-code-block@2x.png",
+            "accesskey": "",
+            "weight": "4",
+            "bid": 4
+        },
+        {
+            "title": "Make selected text into a block quote",
+            "content": "js: markdownEditor.blockQuote();",
+            "icon": "md-make-quote@2x.png",
+            "accesskey": "Q",
+            "weight": "5",
+            "bid": 5
+        },
+        {
+            "title": "Make selected text into an ordered list (numbered)",
+            "content": "js: markdownEditor.orderedList();",
+            "icon": "md-make-ol@2x.png",
+            "accesskey": "O",
+            "weight": "6",
+            "bid": 6
+        },
+        {
+            "title": "Make selected text into an unordered list (bullets)",
+            "content": "js: markdownEditor.unorderedList();",
+            "icon": "md-make-ul@2x.png",
+            "accesskey": "N",
+            "weight": "7",
+            "bid": 7
+        },
+        {
+            "title": "Insert a definition list",
+            "content": "js:  new markdownEditor.DefinitionList();",
+            "icon": "md-add-dl@2x.png",
+            "accesskey": "",
+            "weight": "8",
+            "bid": 8
+        },
+        {
+            "title": "Insert a table",
+            "content": "js:  new markdownEditor.Table();",
+            "icon": "md-add-table@2x.png",
+            "accesskey": "T",
+            "weight": "9",
+            "bid": 9
+        },
+        {
+            "title": "Insert an abbreviation (word or acronym with definition)",
+            "content": "js:  markdownEditor.abbreviation();",
+            "icon": "md-add-abbreviation@2x.png",
+            "accesskey": "",
+            "weight": "10",
+            "bid": 10
+        },
+        {
+            "title": "Insert a footnote",
+            "content": "js:  markdownEditor.footnote();",
+            "icon": "md-add-footnote@2x.png",
+            "accesskey": "F",
+            "weight": "11",
+            "bid": 11
+        },
+        {
+            "title": "Make text into an autolink (turns URLs in links, turns words into section identifiers for navigating the document)",
+            "content": "js:  markdownEditor.autoLink();",
+            "icon": "md-add-autolink@2x.png",
+            "accesskey": "A",
+            "weight": "12",
+            "bid": 12
+        },
+        {
+            "title": "Make text into a link (turns text into a link with more options)",
+            "content": "js:  markdownEditor.link();",
+            "icon": "md-make-link@2x.png",
+            "accesskey": "L",
+            "weight": "13",
+            "bid": 13
+        },
+        {
+            "title": "Insert an image",
+            "content": "js:  markdownEditor.image();",
+            "icon": "md-add-picture@2x.png",
+            "accesskey": "M",
+            "weight": "14",
+            "bid": 14
+        },
+        {
+            "title": "Insert a line break",
+            "content": "js: markdownEditor.lineBreak();",
+            "icon": "md-add-line@2x.png",
+            "accesskey": "R",
+            "weight": "15",
+            "bid": 15
+        },
+        {
+            "title": "Insert a horizontal ruler (horizontal line)",
+            "content": "js: markdownEditor.horizontalRuler();",
+            "icon": "md-add-hr@2x.png",
+            "accesskey": "",
+            "weight": "16",
+            "bid": 16
+        },
+        {
+            "title": "Teaser break",
+            "content": "<!--break-->",
+            "icon": "teaserbr@2x.png",
+            "accesskey": "",
+            "weight": "17",
+            "bid": 17
+        },
+        {
+            "title": "Preview",
+            "content": "js: E.prvAjax();",
+            "icon": "preview@2x.png",
+            "accesskey": "P",
+            "weight": "18",
+            "bid": 18
+        },
+        {
+            "title": "Help",
+            "content": "js: E.help('fadeIn');",
+            "icon": "md-help@2x.png",
+            "accesskey": "",
+            "weight": "19",
+            "bid": 19
+        }
+    ]
+}
