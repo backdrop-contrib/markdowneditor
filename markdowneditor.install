@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Install, update and uninstall functions for the Activity Calendar module.
+ * Install funtions for the Markdowneditor module.
  */
 
  /**
