@@ -8,9 +8,11 @@
  * Implements hook_install().
  */
 function markdowneditor_install() {
-  // Ensure the path to icons directory is set correctly.
-  $iconpath = backdrop_get_path('module', 'markdowneditor') . '/icons';
-  config_set('bueditor.editor.markdown', 'iconpath', $iconpath);
+  // Ensure the paths to icons and libraries are set correctly.
+  $path = backdrop_get_path('module', 'markdowneditor');
+  config_set('bueditor.editor.markdown', 'iconpath', $path . '/icons');
+  $librarypath = "%BUEDITOR/library/bue.min.default.js\r\n$path/library/markdowneditor.js\r\n$path/library/markdowneditor.css\r\n$path/library/markdowneditor_popup.css";
+  config_set('bueditor.editor.markdown', 'librarypath', $librarypath);
 }
 
  /**
