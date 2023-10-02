@@ -4,7 +4,7 @@
     "id": "markdown",
     "pages": "node/*\r\ncomment/*",
     "excludes": "edit-log\r\nedit-menu-description",
-    "iconpath": "modules/markdowneditor/icons",
+    "iconpath": "modules/contrib/markdowneditor/icons",
     "librarypath": "%BUEDITOR/library/bue.min.default.js\r\nmodules/markdowneditor/library/markdowneditor.js\r\nmodules/markdowneditor/library/markdowneditor.css\r\nmodules/markdowneditor/library/markdowneditor_popup.css",
     "spriteon": 0,
     "spritename": "",

@@ -1,8 +1,17 @@
 <?php
 /**
  * @file
- * Install funtions for the Markdowneditor module.
+ * Install functions for the Markdowneditor module.
  */
+
+/**
+ * Implements hook_install().
+ */
+function markdowneditor_install() {
+  // Ensure the path to icons directory is set correctly.
+  $iconpath = backdrop_get_path('module', 'markdowneditor') . '/icons';
+  config_set('bueditor.editor.markdown', 'iconpath', $iconpath);
+}
 
  /**
  * Implements hook_uninstall().
